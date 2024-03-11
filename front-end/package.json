@@ -1,0 +1,31 @@
+{
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start"
+  },
+  "dependencies": {
+    "@chakra-ui/icons": "^2.1.0",
+    "@chakra-ui/react": "^2.8.0",
+    "@emotion/react": "^11.11.1",
+    "@emotion/styled": "^11.11.0",
+    "dompurify": "^2.4.1",
+    "firebase": "^9.15.0",
+    "framer-motion": "^10.15.2",
+    "isomorphic-dompurify": "^0.24.0",
+    "local-storage-fallback": "^4.1.2",
+    "next": "latest",
+    "next-sitemap": "^3.1.42",
+    "nextjs": "^0.0.3",
+    "react": "^18.2.0",
+    "react-dom": "18.2.0",
+    "react-firebase-hooks": "^5.1.1",
+    "react-icons": "^4.10.1",
+    "react-select-search": "^4.1.6",
+    "react-timer-hook": "^3.0.5",
+    "sass": "^1.57.0",
+    "styled-components": "^6.0.5",
+    "styled-theming": "^2.2.0"
+  }
+}
