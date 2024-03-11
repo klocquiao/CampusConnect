@@ -38,12 +38,18 @@ def post_create():
 @app.route('/api/posts/',methods=['GET'])
 def post_get():
     query = ds_client.query(kind='Posting')
-    results = list(query.fetch())
 
+    tags = request.args.getlist('tags')
+
+    if tags:
+        query.add_filter('tags', 'IN', tags)
+
+    results = list(query.fetch())
     return results, 200
 
 @app.route('/api/posts/<user_id>',methods=['GET'])
 def post_get(user_id):
+
     query = ds_client.query(kind='Posting')
     query.add_filter('user_id', '=', user_id)
     results = list(query.fetch())
