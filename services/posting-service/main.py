@@ -11,6 +11,17 @@ from google.cloud import datastore
 app = Flask(__name__)
 ds_client = datastore.Client()
 
+def error500():
+    resp = {
+        'message': 'Internal error occured.'
+    }
+    return resp, 500
+
+
+@app.route('/')
+def index():
+    return 'Posting service'
+
 @app.route('/api/posts/create', methods=['POST'])
 def post_create():
     user_id = request.form['user_id']
@@ -35,7 +46,7 @@ def post_create():
 
     return posting, 200
 
-@app.route('/api/posts/',methods=['GET'])
+@app.route('/api/posts',methods=['GET'])
 def post_get():
     query = ds_client.query(kind='Posting')
 
