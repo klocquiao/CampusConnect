@@ -45,10 +45,10 @@ def user_create():
 
 
 @app.route('/api/users/<user_name>',methods=['GET'])
-def post_get(user_id):
+def user_name_get(user_name):
 
     query = ds_client.query(kind='Posting')
-    query.add_filter('user_name', '=', user_id)
+    query.add_filter('user_name', '=', user_name)
     results = list(query.fetch())
 
     return results, 200
