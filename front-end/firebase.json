@@ -7,10 +7,31 @@
       "**/node_modules/**"
     ],
     "rewrites": [
-        {
-            "source": "**",
-            "destination": "out/index.html"
+      {
+        "source": "/posting-service/**",
+        "run": {
+          "serviceId": "posting-service",
+          "region": "us-west1"
         }
+      },
+      {
+        "source": "/user-service/**",
+        "run": {
+          "serviceId": "user-service",
+          "region": "us-west1"
+        }
+      },
+      {
+        "source": "/advertising-service/**",
+        "run": {
+          "serviceId": "advertising-service",
+          "region": "us-west1"
+        }
+      },
+      {
+          "source": "**",
+          "destination": "out/index.html"
+      }
     ]
   }
 }
