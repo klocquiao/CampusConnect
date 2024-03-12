@@ -47,7 +47,7 @@ def post_create():
     return posting, 200
 
 @app.route('/api/posts',methods=['GET'])
-def post_get():
+def posts_get():
     query = ds_client.query(kind='Posting')
 
     tags = request.args.getlist('tags')
