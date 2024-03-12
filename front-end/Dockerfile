@@ -8,6 +8,7 @@ COPY . ./
 
 # Install production dependencies.
 RUN yarn install
+COPY . ./
 
 # Start the app
 CMD [ "yarn", "start" ]
