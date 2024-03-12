@@ -1,8 +1,8 @@
-import { Button, Drawer, DrawerBody, DrawerCloseButton, DrawerContent, DrawerHeader, DrawerOverlay, Stack, useDisclosure } from "@chakra-ui/react";
+import { Button } from "@chakra-ui/react";
+import Link from 'next/link';
 import { AddIcon } from "@chakra-ui/icons";
 
 export function CreateButton(){
-    const {isOpen, onOpen, onClose} = useDisclosure();
     
     return(
         <div>
@@ -12,21 +12,11 @@ export function CreateButton(){
                 size={"sm"}
                 mr={4}
                 leftIcon={<AddIcon/>}
-                onClick={onOpen}
+                as={Link}
+                href={"/create/post"}
                 aria-controls="Create Post">
                 Create Post
             </Button>
-            <Drawer placement="left" onClose={onClose} isOpen={isOpen} size="sm" closeOnOverlayClick={false}>
-                <DrawerOverlay/>
-                <DrawerContent>
-                    <DrawerCloseButton/>
-                    <DrawerHeader borderBottomWidth="1px">
-                        Create Post
-                    </DrawerHeader>
-                    <DrawerBody>
-                    </DrawerBody>
-                </DrawerContent>
-            </Drawer>
         </div>
     )
 }
