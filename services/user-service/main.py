@@ -26,8 +26,8 @@ def index():
 
 @app.route('/api/users/create', methods=['POST'])
 def user_create():
-    user_name = request.form['user_name']
-    password = request.form['password']
+    user_name = request.json['user_name']
+    password = request.json['password']
     
     posting = {
         'user_id': str(uuid.uuid4()),
