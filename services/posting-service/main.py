@@ -23,6 +23,7 @@ def index():
     return 'Posting service'
 
 @app.route('/api/posts/create', methods=['POST'])
+@app.route('/posting-service/api/posts/create', methods=['POST'])
 def post_create():
     user_id = request.json['user_id']
     description = request.json['description']
@@ -46,6 +47,7 @@ def post_create():
     return posting, 200
 
 @app.route('/api/posts',methods=['GET'])
+@app.route('/posting-service/api/posts',methods=['GET'])
 def posts_get():
     query = ds_client.query(kind='Posting')
 
@@ -58,6 +60,7 @@ def posts_get():
     return results, 200
 
 @app.route('/api/posts/<user_id>',methods=['GET'])
+@app.route('/posting-service/api/posts/<user_id>',methods=['GET'])
 def post_get(user_id):
 
     query = ds_client.query(kind='Posting')
