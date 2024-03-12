@@ -8,7 +8,8 @@ COPY . ./
 
 # Install production dependencies.
 RUN yarn install
+RUN next build
 COPY . ./
 
 # Start the app
-CMD [ "yarn", "start" ]
+CMD [ "next", "start" ]
