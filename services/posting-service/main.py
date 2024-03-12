@@ -24,11 +24,10 @@ def index():
 
 @app.route('/api/posts/create', methods=['POST'])
 def post_create():
-    user_id = request.form['user_id']
-    description = request.form['description']
-    tags = request.form['tags']
-    # type = request.form['type']
-    price = request.form['price']
+    user_id = request.json['user_id']
+    description = request.json['description']
+    tags = request.json['tags']
+    price = request.json['price']
 
     posting = {
         'user_id': user_id,
