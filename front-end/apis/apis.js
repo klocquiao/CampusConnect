@@ -14,7 +14,7 @@ const getPosts = async (setPost) => {
     try{
         axios.get('/posting-service/api/posts')
             .then((resp) => {
-                setPost(resp.data);
+                setPost(resp.json);
             })
             .catch((err) => {
                 console.log(err);
