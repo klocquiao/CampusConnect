@@ -5,7 +5,7 @@ export function PostList({posts}){
         <div>
             <h2>Posts</h2>
             <List>
-                {posts ? posts.map(post => <Posting text={post.description}/>) : <></>}
+                {posts ? posts.map(post => <Posting text={post.description} price={post.price} tags={price.tags}/>) : <></>}
             </List>
         </div>
     );
