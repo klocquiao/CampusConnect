@@ -18,6 +18,7 @@ export const getPosts = async () => {
                 'content-type': 'application/json',
             },
         });
+        console.log(response.data);
         return response.data;
     } catch (err) {
         console.log(err);

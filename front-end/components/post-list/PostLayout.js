@@ -9,8 +9,8 @@ export default function PostLayout(){
     const [posts, setPosts] = useState(null);
 
     useEffect(() => {
-        getPosts();
-        // setPosts(getPosts(''));
+        // getPosts();
+        setPosts(getPosts());
     }, [])
 
     return(

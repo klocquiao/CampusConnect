@@ -1,15 +1,13 @@
 import { Avatar, Card, CardBody, HStack, Heading, List, ListItem, Stack, Text } from "@chakra-ui/react";
 
 export function PostList({posts}){
-    console.log(posts);
-
     return(
         <div>
             <h2>Posts</h2>
             <List>
-                {/* {posts ? posts.map((post) => {
+                {posts ? posts.map((post) => {
                     <Posting text={post.description}/>
-                }) : <></>} */}
+                }) : <></>}
             </List>
         </div>
     );
