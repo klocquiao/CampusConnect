@@ -2,7 +2,7 @@ import { useState } from 'react';
 
 import { Box, Button, Flex, FormControl, FormLabel, Heading, Input, Stack, Text } from '@chakra-ui/react';
 import { Dropzone } from '../../components/Dropzone';
-import { createPost } from '../../apis/apis';
+import { createPost, downloadImage } from '../../apis/apis';
 import { useRouter } from 'next/router';
 
 export default function Post(){
@@ -10,6 +10,8 @@ export default function Post(){
     const [price, setPrice] = useState(null);
     const [tags, setTags] = useState("");
     const [errMsg, setErrMsg] = useState("");
+    const [recentImage, setRecentImage] = useState(null);
+    const [path, setPath] = useState("");
     const router = useRouter();
 
     const onPostClick = () => {
@@ -26,6 +28,13 @@ export default function Post(){
             console.log(err);
         });
     };
+    const handleDownload = () => {
+        if (recentImage != null) {
+            const resp = downloadImage('swag'.concat('_user'), recentImage.name); // TODO actual username
+            const createdPath = URL.createObjectURL(resp.data);
+            setPath(createdPath);
+        }
+    }
 
     return(
         <div>
@@ -53,7 +62,11 @@ export default function Post(){
                 </Stack>
                 </Box>
                 <Heading fontSize={"4xl"}>Ad image upload</Heading>
-                <Dropzone className='p-16 mt-10 border border-neutral-200'/>
+                <Dropzone setRecentImage={setRecentImage} className='p-16 mt-10 border border-neutral-200'/>
+                <Heading fontSize={"4xl"}>Download the image you just uploaded</Heading>
+                <Button onClick={handleDownload}>Download</Button>
+                <Heading fontSize={"4xl"}>Your image:</Heading>
+                <img key={path} src={path} />
             </Stack>
             </Flex>
         </div>

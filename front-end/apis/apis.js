@@ -46,10 +46,20 @@ const uploadImage = async (data, file, username) => {
         console.log(error);
     }
 }
+const downloadImage = async (username, filename) => {
+    try {
+        return await fetch(`/upload?username=${username}&filename=${filename}`, {
+            method: 'GET'
+        })
+    } catch (error) {
+        console.log(error);
+    }
+}
 
 export {
     createUser,
     createPost,
-    getPosts, 
-    uploadImage
+    getPosts,
+    uploadImage,
+    downloadImage
 };
