@@ -31,10 +31,11 @@ export default function Post(){
     const handleDownload = async () => {
         if (recentImage != null) {
             const resp = await downloadImage('swag'.concat('_user'), recentImage.name); // TODO actual username
-            const blob = await resp.blob();
+            const blob = await resp.json();
             console.log(blob);
-            const createdPath = URL.createObjectURL(blob);
-            setPath(createdPath);
+            // const createdPath = URL.createObjectURL(blob);
+            // setPath(createdPath);
+            setPath(blob)
         }
     }
 
@@ -68,7 +69,8 @@ export default function Post(){
                 <Heading fontSize={"4xl"}>Download the image you just uploaded</Heading>
                 <Button onClick={handleDownload}>Download</Button>
                 <Heading fontSize={"4xl"}>Your image:</Heading>
-                <img key={path} src={path} />
+                {/* <img key={path} src={path} /> */}
+                <Text>The response back from the server: {}</Text>
             </Stack>
             </Flex>
         </div>
