@@ -5,13 +5,13 @@ export function PostList({posts}){
         <div>
             <h2>Posts</h2>
             <List>
-                {posts ? posts.map(post => <Posting text={post.description} price={post.price} tags={price.tags}/>) : <></>}
+                {posts ? posts.map(post => <Posting text={post.description} price={post.price} tags={post.tags}/>) : <></>}
             </List>
         </div>
     );
 }
 
-function Posting({text, tags, price}){
+function Posting({text, price, tags}){
     return(
         <ListItem mt={3}>
             <Card bg={'rgba(0, 0, 0, 0.06)'}>
