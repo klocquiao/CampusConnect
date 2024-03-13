@@ -14,7 +14,7 @@ export const createUser = async (url, data) => {
 // Post microservice - get posts
 export const getPosts = async () => {
     const response = await axios.get(
-      '/posting-service/api/v1/posts',
+      '/posting-service/api/posts',
       {
         headers: {
             Authorization: `Bearer ${TOKEN}`,
