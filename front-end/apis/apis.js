@@ -29,6 +29,9 @@ const uploadImage = async (data, username) => {
     try {
         // return await axios.post(`/upload?username=${username}`, data);
         return await fetch(`/upload?username=${username}`, {
+            headers: {
+                'Content-Type': 'multipart/form-data'
+            },
             method: 'POST',
             body: data
         })
