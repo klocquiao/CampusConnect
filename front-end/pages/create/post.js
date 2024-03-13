@@ -67,10 +67,10 @@ export default function Post(){
                 <Heading fontSize={"4xl"}>Ad image upload</Heading>
                 <Dropzone setRecentImage={setRecentImage} className='p-16 mt-10 border border-neutral-200'/>
                 <Heading fontSize={"4xl"}>Download the image you just uploaded</Heading>
-                <Button onClick={handleDownload}>Download</Button>
+                <Button onClick={handleDownload} disabled={recentImage == null}>Download</Button>
                 <Heading fontSize={"4xl"}>Your image:</Heading>
                 {/* <img key={path} src={path} /> */}
-                <Text>The response back from the server: {path}</Text>
+                <Text>The response back from the server: {path} (using a temporary username)</Text>
             </Stack>
             </Flex>
         </div>
