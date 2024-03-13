@@ -70,7 +70,7 @@ export default function Post(){
                 <Button onClick={handleDownload} disabled={recentImage == null}>Download</Button>
                 <Heading fontSize={"4xl"}>Your image:</Heading>
                 {/* <img key={path} src={path} /> */}
-                <Text>The response back from the server: {path} (using a temporary username)</Text>
+                <Text>The response back from the server (using a temporary username): {path} </Text>
             </Stack>
             </Flex>
         </div>
