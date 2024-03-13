@@ -12,20 +12,21 @@ export default function Post(){
     const [errMsg, setErrMsg] = useState("");
 
     const onPostClick = () => {
-        arrayTags = tags.split(',');
+        const arrayTags = tags.split(',');
         createPost({
             "user_id": "3df58ca7-f1a4-4095-841d-60507ccab20a",
             "order_id": "3df58ca7-f1a4-4095-841d-60507ccab20a",
             description: description,
             price: price,
             tags: arrayTags,
-        }).then(() => {
+        }).then((resp) => {
+            console.log(resp);
             const router = useRouter();
             router.push('/home');
         }).catch(err => {
             console.log(err);
         });
-    }
+    };
 
     return(
         <div>
