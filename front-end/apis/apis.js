@@ -48,7 +48,7 @@ const uploadImage = async (data, file, username) => {
 }
 const downloadImage = async (username, filename) => {
     try {
-        return await fetch(`/upload?username=${username}&filename=${filename}`, {
+        return await fetch(`/download?username=${username}&filename=${filename}`, {
             method: 'GET'
         })
     } catch (error) {
