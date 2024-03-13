@@ -4,9 +4,10 @@ import { Box, Button, Flex, FormControl, FormLabel, Heading, Input, InputGroup, 
 import { ViewIcon, ViewOffIcon } from '@chakra-ui/icons';
 
 import { createUser } from '../apis/apis';
+import { useRouter } from 'next/router';
 
 export default function Signup(){
-    const [signupEmail, setSignupEmail] = useState("");
+    const [signupUsername, setSignupUsername] = useState("");
     const [signupPw, setSignupPw] = useState("");
     const [signupPwVerify, setSignupPwVerify] = useState("");
     const [errMsg, setErrMsg] = useState("");
@@ -15,10 +16,16 @@ export default function Signup(){
     const [showPswVerify, setShowPswVerify] = useState(false);
     const handlePswClick = () => setShowPsw(!showPsw);
     const handlePswVerifyClick = () => setShowPswVerify(!showPswVerify);
+
+    const router = useRouter();
+
     const handleSignUp = () => {
       createUser({
-        user_name: signupEmail,
+        user_id: signupUsername,
+        user_name: signupUsername,
         password: signupPw
+      }).then(() => {
+        router.push('/home');
       });
     };
 
@@ -33,8 +40,8 @@ export default function Signup(){
                 <Stack spacing={4}>
                   <Text color="white" fontSize="md">{errMsg}</Text>
                   <FormControl id="email">
-                    <FormLabel color="white">Email address</FormLabel>
-                    <Input color="white" type="email" name="email" placeholder="Enter email" value={signupEmail} onChange={(event) => setSignupEmail(event.target.value)} _placeholder={{color: "gray.300"}}/>
+                    <FormLabel color="white">Username</FormLabel>
+                    <Input color="white" type="username" name="text" placeholder="Enter username" value={signupUsername} onChange={(event) => setSignupUsername(event.target.value)} _placeholder={{color: "gray.300"}}/>
                   </FormControl>
                   <FormControl id="password">
                     <FormLabel color="white">Password</FormLabel>
