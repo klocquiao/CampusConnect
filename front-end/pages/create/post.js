@@ -2,12 +2,29 @@ import { useState } from 'react';
 
 import { Box, Button, Flex, FormControl, FormLabel, Heading, Input, Stack, Text } from '@chakra-ui/react';
 import { Dropzone } from '../../components/Dropzone';
+import { createPost } from '../../apis/apis';
+import { useRouter } from 'next/router';
 
 export default function Post(){
     const [description, setDesc] = useState("");
-    const [tags, setTags] = useState("");
     const [price, setPrice] = useState(null);
+    const [tags, setTags] = useState([]);
     const [errMsg, setErrMsg] = useState("");
+
+    const onPostClick = () => {
+        createPost({
+            "user_id": "3df58ca7-f1a4-4095-841d-60507ccab20a",
+            "order_id": "3df58ca7-f1a4-4095-841d-60507ccab20a",
+            description: description,
+            price: price,
+            tags: tags,
+        }).then(() => {
+            const router = useRouter();
+            router.push('/home');
+        }).catch(err => {
+            console.log(err);
+        });
+    }
 
     return(
         <div>
@@ -31,7 +48,7 @@ export default function Post(){
                     <FormLabel color="white">Price</FormLabel>
                     <Input color="white" type="number" name="price" placeholder="Enter a price" value={price} onChange={(event) => setPrice(event.target.value)} _placeholder={{color: "gray.300"}}/>
                     </FormControl>
-                    <Button colorScheme="teal">Create Post</Button>
+                    <Button colorScheme="teal" onClick={onPostClick}>Create Post</Button>
                 </Stack>
                 </Box>
                 <Heading fontSize={"4xl"}>Ad image upload</Heading>

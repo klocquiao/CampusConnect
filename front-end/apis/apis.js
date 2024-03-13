@@ -9,10 +9,19 @@ const createUser = async (data) => {
     }
 };
 
+// Post microservice - create posts
+const createPost = async (data) => {
+    try {
+        return await axios.post('/posting-service/api/posts/create', data);
+    } catch (error) {
+        console.log(error);
+    }
+}
+
 // Post microservice - get posts
 const getPosts = async (setPost) => {
-    try{
-        await axios.get('/posting-service/api/posts')
+    try{/api/posts
+        await axios.get('/posting-service')
             .then((resp) => {
                 setPost(resp.data);
             })
@@ -40,6 +49,7 @@ const uploadImage = async (data, file, username) => {
 
 export {
     createUser,
+    createPost,
     getPosts, 
     uploadImage
 };
