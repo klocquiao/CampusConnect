@@ -35,7 +35,7 @@ export default function Post(){
             console.log(blob);
             // const createdPath = URL.createObjectURL(blob);
             // setPath(createdPath);
-            setPath(blob)
+            setPath(blob.message);
         }
     }
 
@@ -70,7 +70,7 @@ export default function Post(){
                 <Button onClick={handleDownload}>Download</Button>
                 <Heading fontSize={"4xl"}>Your image:</Heading>
                 {/* <img key={path} src={path} /> */}
-                <Text>The response back from the server: {}</Text>
+                <Text>The response back from the server: {path}</Text>
             </Stack>
             </Flex>
         </div>
