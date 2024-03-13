@@ -8,6 +8,7 @@ const Dropzone = (props) => {
             const file = acceptedFiles.at(-1);
             formData.append('username', 'swag');
             formData.append('file', file);
+            console.log(file);
             uploadImage(formData, 'swag'); // TODO change user name to actual username
         }, [])
         const {getRootProps, getInputProps, isDragActive} = useDropzone({onDrop})
