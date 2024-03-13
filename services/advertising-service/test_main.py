@@ -19,7 +19,7 @@ class FlaskAppTestCase(unittest.TestCase):
 
         # Make a request to upload the file
         with open(temp_file_path, 'rb') as temp_file:
-            response = self.app.post('/upload?username=test_user', data={'file': (temp_file, 'test_file.txt')})
+            response = self.app.post('/upload?username=dummy_user', data={'file': (temp_file, 'test_file.txt')})
 
         # Assert response status code is 200
         self.assertEqual(response.status_code, 200)
@@ -30,7 +30,7 @@ class FlaskAppTestCase(unittest.TestCase):
 
     def test_download_photo(self):
         # Make a request to download the file
-        response = self.app.get('/download?username=test_user&filename=test_file.txt')
+        response = self.app.get('/download?username=dummy_user&filename=test_file.txt')
 
         # Assert response status code is 200
         self.assertEqual(response.status_code, 200)
