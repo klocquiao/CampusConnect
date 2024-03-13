@@ -36,12 +36,12 @@
         }
       },
       {
-          "source": "**",
-          "destination": "out/index.html"
+        "source": "/profile/**",
+        "destination": "/profile/[uid]/index.html"
       },
       {
-          "source": "/profile/**",
-          "destination": "/profile.html"
+          "source": "**",
+          "destination": "out/index.html"
       }
     ]
   }
