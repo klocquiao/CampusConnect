@@ -31,6 +31,7 @@ export default function Post(){
     const handleDownload = () => {
         if (recentImage != null) {
             const resp = downloadImage('swag'.concat('_user'), recentImage.name); // TODO actual username
+            console.log(resp);
             const createdPath = URL.createObjectURL(resp.data);
             setPath(createdPath);
         }
