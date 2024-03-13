@@ -10,7 +10,7 @@ export default function PostLayout(){
 
     useEffect(() => {
         // getPosts();
-        setPosts(getPosts());
+        getPosts(setPosts);
     }, [])
 
     return(
