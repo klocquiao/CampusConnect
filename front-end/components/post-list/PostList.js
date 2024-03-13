@@ -1,14 +1,15 @@
 import { Avatar, Card, CardBody, HStack, Heading, List, ListItem, Stack, Text } from "@chakra-ui/react";
 
-export function PostList(){
+export function PostList({posts}){
+    console.log(posts);
+
     return(
         <div>
             <h2>Posts</h2>
             <List>
-                <Posting text={"This is a test post"}/>
-                <Posting text={"Looking for groupmates for CMPT 474"}/>
-                <Posting text={"Looking to sell textbook"}/>
-                <Posting text={"Looking for a roommate"}/>
+                {/* {posts ? posts.map((post) => {
+                    <Posting text={post.description}/>
+                }) : <></>} */}
             </List>
         </div>
     );

@@ -2,8 +2,17 @@ import { Box, Flex, Stack } from "@chakra-ui/react";
 
 import CreateButton from "./PostCreation";
 import PostList from "./PostList";
+import { useEffect, useState } from "react";
+import { getPosts } from "../../apis/apis";
 
 export default function PostLayout(){
+    const [posts, setPosts] = useState(null);
+
+    useEffect(() => {
+        getPosts();
+        // setPosts(getPosts(''));
+    }, [])
+
     return(
         <Flex 
             flexDirection="row"
@@ -15,7 +24,7 @@ export default function PostLayout(){
                 <CreateButton/>
             </Stack>
             <Box flex='1'>
-                <PostList/>
+                <PostList posts={posts}/>
             </Box>
         </Flex>
     )
