@@ -25,15 +25,13 @@ const getPosts = async (setPost) => {
 }
 
 // Advertising microservice
-const uploadImage = async (data, username) => {
+const uploadImage = async (data, file, username) => {
     try {
         // return await axios.post(`/upload?username=${username}`, data);
         return await fetch(`/upload?username=${username}`, {
-            headers: {
-                'Content-Type': 'multipart/form-data'
-            },
             method: 'POST',
-            body: data
+            body: data,
+            files: file
         })
     } catch (error) {
         console.log(error);
