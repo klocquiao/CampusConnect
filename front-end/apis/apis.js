@@ -12,14 +12,14 @@ const createUser = async (data) => {
 // Post microservice - get posts
 const getPosts = async () => {
     try{
-        const response = await fetch('/posting-service/api/posts', {
-            method: 'GET',
-            headers: {
-                'content-type': 'application/json',
-            },
-        });
-        console.log(response.data);
-        return response.data;
+        axios.get('/posting-service/api/posts')
+            .then((resp) => {
+                console.log(resp.data);
+                return resp.data;
+            })
+            .catch((err) => {
+                console.log(err);
+            })
     } catch (err) {
         console.log(err);
     }
