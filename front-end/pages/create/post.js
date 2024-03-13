@@ -10,6 +10,7 @@ export default function Post(){
     const [price, setPrice] = useState(null);
     const [tags, setTags] = useState("");
     const [errMsg, setErrMsg] = useState("");
+    const router = useRouter();
 
     const onPostClick = () => {
         const arrayTags = tags.split(',');
@@ -20,9 +21,7 @@ export default function Post(){
             price: price,
             tags: arrayTags,
         }).then((resp) => {
-            console.log(resp);
-            const router = useRouter();
-            router.push('/home');
+            router.push("home");
         }).catch(err => {
             console.log(err);
         });
