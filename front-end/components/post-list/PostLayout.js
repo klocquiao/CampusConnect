@@ -9,13 +9,8 @@ export default function PostLayout(){
     const [posts, setPosts] = useState(null);
 
     useEffect(() => {
-        // getPosts();
         getPosts(setPosts);
-    }, [])
-
-    useEffect(() => {
-        console.log(posts);
-    }, [posts]);
+    }, []);
 
     return(
         <Flex 
