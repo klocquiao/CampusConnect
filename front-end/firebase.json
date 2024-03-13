@@ -38,6 +38,10 @@
       {
           "source": "**",
           "destination": "out/index.html"
+      },
+      {
+          "source": "/profile/**",
+          "destination": "/profile/[uid].html"
       }
     ]
   }
