@@ -23,7 +23,7 @@ function Blur(props){
   )
 }
 
-export default function Home() {
+export default function Index() {
   return (
     <Box position="relative">
       <Container
