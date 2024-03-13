@@ -17,7 +17,7 @@ export const getPosts = async () => {
       '/posting-service/api/posts',
       {
         headers: {
-            Authorization: `Bearer ${TOKEN}`,
+            Authorization: `Bearer $(gcloud auth print-identity-token)`,
         }
       });
       console.log(response);
