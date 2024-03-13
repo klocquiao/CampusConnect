@@ -41,7 +41,7 @@
       },
       {
           "source": "/profile/**",
-          "destination": "/profile/[uid]/index.html"
+          "destination": "/profile.html"
       }
     ]
   }
