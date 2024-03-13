@@ -12,11 +12,9 @@ const createUser = async (data) => {
 // Post microservice - get posts
 const getPosts = async (setPost) => {
     try{
-        setPost([{description: "test1"}]);
         axios.get('/posting-service/api/posts')
             .then((resp) => {
-                console.log(resp);
-                setPost([{description: "test2"}]);
+                setPost(resp.data);
             })
             .catch((err) => {
                 console.log(err);
@@ -31,9 +29,6 @@ const uploadImage = async (data, username) => {
     try {
         // return await axios.post(`/upload?username=${username}`, data);
         return await fetch(`/upload?username=${username}`, {
-            headers: {
-                'Content-Type': 'multipart/form-data'
-            },
             method: 'POST',
             body: data
         })
