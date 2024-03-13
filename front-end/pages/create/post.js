@@ -19,13 +19,14 @@ export default function Post(){
             description: description,
             price: price,
             tags: arrayTags,
-        }).then(() => {
+        }).then((resp) => {
+            console.log(resp);
             const router = useRouter();
             router.push('/home');
         }).catch(err => {
             console.log(err);
         });
-    }
+    };
 
     return(
         <div>
