@@ -15,23 +15,23 @@ const PfpImgContainer = styled.div`
     height: 11rem;
 `;
 
-export default function Profile(props){
+export default function Profile(){
     const [user, setUser] = useState({'user_name': 'Loading'});
     const [userIcon, setUserIcon] = useState(["gray.100","0"]);
 
     const router = useRouter();
-    let {uid: urlUid} = router.query;
+    let {uid} = router.query;
 
     useEffect(() => {
         try{
             if(urlUid){
-                getUser(urlUid, setUser);
-                console.log(urlUid);
+                getUser(uid, setUser);
+                console.log(uid);
             }
         }catch(err){
             console.log(err);
         }
-    }, [urlUid]);
+    }, [uid]);
 
     return(
         <Container>
