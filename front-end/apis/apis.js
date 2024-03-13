@@ -12,9 +12,9 @@ const createUser = async (data) => {
 // Post microservice - get posts
 const getPosts = async (setPost) => {
     try{
-        axios.get('/posting-service/api/posts')
+        await axios.get('/posting-service/api/posts')
             .then((resp) => {
-                setPost(resp.data);
+                setPost(resp);
             })
             .catch((err) => {
                 console.log(err);
