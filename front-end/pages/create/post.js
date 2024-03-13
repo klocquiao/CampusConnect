@@ -21,7 +21,7 @@ export default function Post(){
             price: price,
             tags: arrayTags,
         }).then((resp) => {
-            router.push("home");
+            router.push("/home");
         }).catch(err => {
             console.log(err);
         });
