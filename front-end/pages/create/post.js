@@ -28,9 +28,9 @@ export default function Post(){
             console.log(err);
         });
     };
-    const handleDownload = () => {
+    const handleDownload = async () => {
         if (recentImage != null) {
-            const resp = downloadImage('swag'.concat('_user'), recentImage.name); // TODO actual username
+            const resp = await downloadImage('swag'.concat('_user'), recentImage.name); // TODO actual username
             console.log(resp);
             const createdPath = URL.createObjectURL(resp.data);
             setPath(createdPath);
