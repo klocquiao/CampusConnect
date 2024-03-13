@@ -16,10 +16,9 @@ export const getPosts = async () => {
             method: 'GET',
             headers: {
                 'content-type': 'application/json',
-                'authentication': 'Bearer $(gcloud auth print-identity-token)',
             },
         });
-        console.log(response);
+        return response.data;
     } catch (err) {
         console.log(err);
     }
