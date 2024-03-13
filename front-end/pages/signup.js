@@ -24,7 +24,8 @@ export default function Signup(){
         user_id: signupUsername,
         user_name: signupUsername,
         password: signupPw
-      }).then(() => {
+      }).then((resp) => {
+        console.log(resp);
         router.push('/home');
       });
     };

@@ -42,10 +42,10 @@ export default function Profile(){
                         bg={userIcon[0]}
                         src={`/images/pfp-icon-imgs/${userIcon[1]}.png`}
                         alt={"Profile Picture"}
-                        name={user['user_name']}
+                        name={uid}
                     />
                 </PfpImgContainer>
-                <h1>{user['user_name']}</h1>
+                <h1>{uid}</h1>
             </div>
         </Container>
     )
