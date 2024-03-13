@@ -13,6 +13,10 @@ export default function PostLayout(){
         getPosts(setPosts);
     }, [])
 
+    useEffect(() => {
+        console.log(posts);
+    }, [posts]);
+
     return(
         <Flex 
             flexDirection="row"
