@@ -27,7 +27,11 @@ const getPosts = async () => {
 // Advertising microservice
 const uploadImage = async (data, username) => {
     try {
-        return await axios.post(`/upload?username=${username}`, data);
+        // return await axios.post(`/upload?username=${username}`, data);
+        return await fetch(`/upload?username=${username}`, {
+            method: 'POST',
+            body: data
+        })
     } catch (error) {
         console.log(error);
     }
