@@ -30,7 +30,7 @@ def upload_photo():
     # Get file from request
     file = request.files.get('file')
     if not file:
-        return jsonify({'error': 'File parameter is required'}), 400
+        return jsonify({'error': 'File parameter is required', 'request': request}), 400
 
     # Upload file to Google Cloud Storage
     bucket_name = f'{username}-bucket'
