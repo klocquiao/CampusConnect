@@ -1,4 +1,4 @@
-import { Avatar, Card, CardBody, HStack, Heading, List, ListItem, Stack, Text } from "@chakra-ui/react";
+import { Avatar, Badge, Card, CardBody, CardFooter, HStack, Heading, List, ListItem, Stack, Text } from "@chakra-ui/react";
 
 export function PostList({posts}){
     return(
@@ -11,7 +11,7 @@ export function PostList({posts}){
     );
 }
 
-function Posting({text}){
+function Posting({text, tags, price}){
     return(
         <ListItem mt={3}>
             <Card bg={'rgba(0, 0, 0, 0.06)'}>
@@ -19,7 +19,11 @@ function Posting({text}){
                     <Stack>
                         <HStack>
                             <Avatar name=" " src={"/images/pfp-icon-imgs/0.png"}/>
+                            <Text as='b'>${price}</Text>
                             <Text size="md">{text}</Text>
+                        </HStack>
+                        <HStack>
+                            {tags ? tags.map(tag => <Badge colorScheme='purple'>{tag}</Badge>) : <></>}
                         </HStack>
                     </Stack>
                 </CardBody>
