@@ -22,7 +22,14 @@
         }
       },
       {
-        "source": "/advertising-service/**",
+        "source": "/upload**",
+        "run": {
+          "serviceId": "advertising-service",
+          "region": "us-west1"
+        }
+      },
+      {
+        "source": "/download**",
         "run": {
           "serviceId": "advertising-service",
           "region": "us-west1"

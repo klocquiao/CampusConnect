@@ -4,7 +4,6 @@ import { Box, Button, Flex, FormControl, FormLabel, Heading, Input, InputGroup, 
 import { ViewIcon, ViewOffIcon } from '@chakra-ui/icons';
 
 import { createUser } from '../apis/apis';
-import { useIdentityToken } from '../context/IdentityTokenContext';
 
 export default function Signup(){
     const [signupEmail, setSignupEmail] = useState("");
@@ -16,12 +15,11 @@ export default function Signup(){
     const [showPswVerify, setShowPswVerify] = useState(false);
     const handlePswClick = () => setShowPsw(!showPsw);
     const handlePswVerifyClick = () => setShowPswVerify(!showPswVerify);
-    const { identityToken } = useIdentityToken();
     const handleSignUp = () => {
       createUser('/user-service/api/users/create', {
         user_name: signupEmail,
         password: signupPw
-      }, identityToken);
+      });
     };
 
     return(
