@@ -1,6 +1,7 @@
 import { useState } from 'react';
 
 import { Box, Button, Flex, FormControl, FormLabel, Heading, Input, Stack, Text } from '@chakra-ui/react';
+import { Dropzone } from '../../components/Dropzone';
 
 export default function Post(){
     const [description, setDesc] = useState("");
@@ -33,6 +34,8 @@ export default function Post(){
                     <Button colorScheme="teal">Create Post</Button>
                 </Stack>
                 </Box>
+                <Heading fontSize={"4xl"}>Ad image upload</Heading>
+                <Dropzone className='p-16 mt-10 border border-neutral-200'/>
             </Stack>
             </Flex>
         </div>
