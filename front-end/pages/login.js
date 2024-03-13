@@ -31,6 +31,5 @@ export default function Login(){
             </Stack>
           </Flex>
       </div>
-
     );
 }

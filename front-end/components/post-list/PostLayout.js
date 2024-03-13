@@ -11,10 +11,10 @@ export default function PostLayout(){
             flexWrap="wrap"
             alignItems="stretch"
             gap={12}>
-            <Stack bg="orange.100">
+            <Stack>
                 <CreateButton/>
             </Stack>
-            <Box flex='1' bg="red.100">
+            <Box flex='1'>
                 <PostList/>
             </Box>
         </Flex>

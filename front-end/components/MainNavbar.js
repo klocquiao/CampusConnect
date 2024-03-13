@@ -27,7 +27,6 @@ function NavLink(props){
 
 function MainNavbar() {
   const {isOpen, onOpen, onClose} = useDisclosure();
-  const [showLogout, setShowLogout] = useState(false);
   const [userIcon, setUserIcon] = useState(["gray.100","0"]);
 
   return (
@@ -42,7 +41,7 @@ function MainNavbar() {
         />
         <HStack spacing={8} alignItems={"center"}>
           <Box color={"white"}>
-            <Link href={showLogout ? "/home" : "/"} className="site-title nav-props">CampusConnect</Link>
+            <Link href={"/home"} className="site-title nav-props">CampusConnect</Link>
           </Box>
           <HStack as={"nav"} spacing={4} display={{base: "none", md: "flex"}}>
             <CreateButton/>
