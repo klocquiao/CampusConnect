@@ -1,11 +1,26 @@
 import axios from 'axios';
 
-// Users microservice
+// Users microservice - create user
 const createUser = async (data) => {
     try {
         return await axios.post('/user-service/api/users/create', data);
     } catch (error) {
         console.log(error);
+    }
+};
+
+// Users microservice - get user
+const getUser = async ({urlUid, setUser}) => {
+    try{
+        await axios.get(`/user-service/api/users/${urlUid}`)
+            .then((resp) => {
+                setUser(resp.data);
+            })
+            .catch((err) => {
+                console.log(err);
+            })
+    } catch (err) {
+        console.log(err);
     }
 };
 
@@ -58,6 +73,7 @@ const downloadImage = async (username, filename) => {
 
 export {
     createUser,
+    getUser,
     createPost,
     getPosts,
     uploadImage,
