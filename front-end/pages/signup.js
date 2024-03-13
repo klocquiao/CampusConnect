@@ -3,6 +3,8 @@ import { useState } from 'react';
 import { Box, Button, Flex, FormControl, FormLabel, Heading, Input, InputGroup, InputRightElement, Stack, Text } from '@chakra-ui/react';
 import { ViewIcon, ViewOffIcon } from '@chakra-ui/icons';
 
+import { createUser } from '../apis/apis';
+
 export default function Signup(){
     const [signupEmail, setSignupEmail] = useState("");
     const [signupPw, setSignupPw] = useState("");
@@ -13,6 +15,12 @@ export default function Signup(){
     const [showPswVerify, setShowPswVerify] = useState(false);
     const handlePswClick = () => setShowPsw(!showPsw);
     const handlePswVerifyClick = () => setShowPswVerify(!showPswVerify);
+    const handleSignUp = () => {
+      createUser({
+        user_name: signupEmail,
+        password: signupPw
+      });
+    };
 
     return(
       <div>
@@ -50,7 +58,7 @@ export default function Signup(){
                       </InputRightElement>
                     </InputGroup>
                   </FormControl>
-                  <Button colorScheme="teal">Sign up</Button>
+                  <Button colorScheme="teal" onClick={handleSignUp}>Sign up</Button>
                 </Stack>
               </Box>
             </Stack>
