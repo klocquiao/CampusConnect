@@ -8,16 +8,17 @@ import { useRouter } from 'next/router';
 export default function Post(){
     const [description, setDesc] = useState("");
     const [price, setPrice] = useState(null);
-    const [tags, setTags] = useState([]);
+    const [tags, setTags] = useState("");
     const [errMsg, setErrMsg] = useState("");
 
     const onPostClick = () => {
+        arrayTags = tags.split(',');
         createPost({
             "user_id": "3df58ca7-f1a4-4095-841d-60507ccab20a",
             "order_id": "3df58ca7-f1a4-4095-841d-60507ccab20a",
             description: description,
             price: price,
-            tags: tags,
+            tags: arrayTags,
         }).then(() => {
             const router = useRouter();
             router.push('/home');
