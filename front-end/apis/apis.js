@@ -1,16 +1,16 @@
 import axios from 'axios';
 
 // Users microservice
-export const createUser = async (url, data) => {
+const createUser = async (data) => {
     try {
-        return await axios.post(url, data);
+        return await axios.post('/user-service/api/users/create', data);
     } catch (error) {
         console.log(error);
     }
 };
 
 // Post microservice - get posts
-export const getPosts = async () => {
+const getPosts = async () => {
     try{
         const response = await fetch('/posting-service/api/posts', {
             method: 'GET',
@@ -22,4 +22,19 @@ export const getPosts = async () => {
     } catch (err) {
         console.log(err);
     }
+}
+
+// Advertising microservice
+const uploadImage = async (data, username) => {
+    try {
+        return await axios.post(`/upload?username=${username}`, data);
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+export {
+    createUser,
+    getPosts, 
+    uploadImage
 };

@@ -16,7 +16,7 @@ export default function Signup(){
     const handlePswClick = () => setShowPsw(!showPsw);
     const handlePswVerifyClick = () => setShowPswVerify(!showPswVerify);
     const handleSignUp = () => {
-      createUser('/user-service/api/users/create', {
+      createUser({
         user_name: signupEmail,
         password: signupPw
       });

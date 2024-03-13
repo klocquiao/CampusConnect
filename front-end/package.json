@@ -19,6 +19,7 @@
     "nextjs": "^0.0.3",
     "react": "^18.2.0",
     "react-dom": "18.2.0",
+    "react-dropzone": "^14.2.3",
     "react-icons": "^4.10.1",
     "sass": "^1.57.0",
     "styled-components": "^6.0.5",
