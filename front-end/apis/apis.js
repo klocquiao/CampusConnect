@@ -63,7 +63,7 @@ const uploadImage = async (bucketUrl, data, file, username) => {
 }
 const downloadImage = async (bucketUrl, username, filename) => {
     try {
-        return await fetch(`/download?username=${bucketUrl}&filename=${filename}`, {
+        return await fetch(`/download?username=${anna_upload_image_campus_connect}&filename=${filename}`, {
             method: 'GET',
         })
     } catch (error) {
