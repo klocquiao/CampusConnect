@@ -66,7 +66,7 @@ export default function Post(){
                 </Stack>
                 </Box>
                 <Heading fontSize={"4xl"}>Ad image upload</Heading>
-                <Dropzone setRecentImage={setRecentImage} isUploaded={setUploadStatus} className='p-16 mt-10 border border-neutral-200'/>
+                <Dropzone setRecentImage={setRecentImage} setUploadStatus={setUploadStatus} className='p-16 mt-10 border border-neutral-200'/>
                 <Text>Upload status: {uploadStatus}</Text>
                 <Heading fontSize={"4xl"}>Download the image you just uploaded</Heading>
                 <Button onClick={handleDownload} disabled={recentImage == null}>Download</Button>
