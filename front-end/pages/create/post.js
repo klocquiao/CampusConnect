@@ -17,9 +17,7 @@ export default function Post(){
 
     useEffect(() => {
         if(window){
-            var hostUrl = window.location.hostname;
-            hostUrl = hostUrl.replaceAll('.','-');
-            setBucketUrl(hostUrl);
+            setBucketUrl(window.location.hostname);
         }
     }, []);
 
@@ -74,7 +72,7 @@ export default function Post(){
                 </Stack>
                 </Box>
                 <Heading fontSize={"4xl"}>Ad image upload</Heading>
-                <Dropzone setRecentImage={setRecentImage} className='p-16 mt-10 border border-neutral-200'/>
+                <Dropzone setRecentImage={setRecentImage} bucketUrl={bucketUrl} className='p-16 mt-10 border border-neutral-200'/>
                 <Heading fontSize={"4xl"}>Download the image you just uploaded</Heading>
                 <Button onClick={handleDownload} disabled={recentImage == null}>Download</Button>
                 <Heading fontSize={"4xl"}>Your image:</Heading>

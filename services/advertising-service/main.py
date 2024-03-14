@@ -126,6 +126,10 @@ def upload_photo():
 def download_photo():
     # Get username from request parameters
     username = request.args.get('username')
+    bucketUrl = request.args.get('bucket')
+    if not bucketUrl:
+        return jsonify({'error': 'Bucket URL parameter is required'}), 400
+    
     if not username:
         return jsonify({'error': 'Username parameter is required'}), 400
     

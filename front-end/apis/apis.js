@@ -56,6 +56,7 @@ const uploadImage = async (bucketUrl, data, file, username) => {
             method: 'POST',
             body: data,
             files: file,
+            bucket: bucketUrl,
         })
     } catch (error) {
         console.log(error);
@@ -63,8 +64,9 @@ const uploadImage = async (bucketUrl, data, file, username) => {
 }
 const downloadImage = async (bucketUrl, username, filename) => {
     try {
-        return await fetch(`/download?username=${bucketUrl}&filename=${filename}`, {
+        return await fetch(`/download?username=${username}&filename=${filename}`, {
             method: 'GET',
+            bucket: bucketUrl
         })
     } catch (error) {
         console.log(error);
