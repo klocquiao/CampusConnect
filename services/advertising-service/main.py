@@ -24,6 +24,10 @@ def create_bucket_if_not_exists(bucket_name):
 def upload_photo():
     # Get username from request parameters
     username = request.args.get('username')
+    bucketUrl = request.args.get('bucket')
+    if not bucketUrl:
+        return jsonify({'error': 'Bucket URL parameter is required'}), 400
+
     if not username:
         return jsonify({'error': 'Username parameter is required'}), 400
 
@@ -33,7 +37,7 @@ def upload_photo():
         return jsonify({'error': 'File parameter is required'}), 400
 
     # Upload file to Google Cloud Storage
-    bucket_name = f'{username}-bucket'
+    bucket_name = f'{bucketUrl}'
     bucket = create_bucket_if_not_exists(bucket_name)
     blob = bucket.blob(file.filename)
     blob.upload_from_file(file)
@@ -44,6 +48,10 @@ def upload_photo():
 def download_photo():
     # Get username from request parameters
     username = request.args.get('username')
+    bucketUrl = request.args.get('bucket')
+    if not bucketUrl:
+        return jsonify({'error': 'Bucket URL parameter is required'}), 400
+    
     if not username:
         return jsonify({'error': 'Username parameter is required'}), 400
 
@@ -53,7 +61,7 @@ def download_photo():
         return jsonify({'error': 'Filename parameter is required'}), 400
 
     # Download file from Google Cloud Storage
-    bucket_name = f'{username}-bucket'
+    bucket_name = f'{bucketUrl}'
     bucket = storage_client.bucket(bucket_name)
     blob = bucket.blob(filename)
     file_path = f'/tmp/{filename}'  # Save the file to /tmp directory
