@@ -50,17 +50,20 @@ const getPosts = async (setPost) => {
 
 // Advertising microservice
 const uploadImage = async (bucketUrl, data, file, username) => {
+const uploadImage = async (bucketUrl, data, file, username) => {
     try {
         // return await axios.post(`/upload?username=${username}`, data);
         return await fetch(`/upload?username=${bucketUrl}`, {
             method: 'POST',
             body: data,
             files: file,
+            bucket: bucketUrl,
         })
     } catch (error) {
         console.log(error);
     }
 }
+const downloadImage = async (bucketUrl, username, filename) => {
 const downloadImage = async (bucketUrl, username, filename) => {
     try {
         return await fetch(`/download?username=${username}&filename=${filename}`, {
