@@ -19,7 +19,6 @@ export default function Post(){
         if(window){
             var hostUrl = window.location.hostname;
             hostUrl = hostUrl.replaceAll('.','-');
-            console.log(hostUrl);
             setBucketUrl(hostUrl);
         }
     }, []);
