@@ -21,7 +21,7 @@ export default function Post(){
             hostUrl = hostUrl.replaceAll('.','-');
             setBucketUrl(hostUrl);
         }
-    }, [location.pathname]);
+    }, []);
 
     const onPostClick = () => {
         const arrayTags = tags.split(',');

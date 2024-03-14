@@ -6,7 +6,7 @@ const Dropzone = (props) => {
     const [bucketUrl, setBucketUrl] = useState("");
 
     useEffect(() => {
-        if(props.bucketUrl !== ""){
+        if(props.bucketUrl){
             setBucketUrl(props.bucketUrl);
             console.log(props.bucketUrl);
         }
