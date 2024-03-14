@@ -52,7 +52,7 @@ const getPosts = async (setPost) => {
 const uploadImage = async (bucketUrl, data, file, username) => {
     try {
         // return await axios.post(`/upload?username=${username}`, data);
-        return await fetch(`/upload?username=${'annaUploadImageqqqqqoooo1192837456tkcabcs294'}`, {
+        return await fetch(`/upload?username=${'anna_upload_image_campus_connect'}`, {
             method: 'POST',
             body: data,
             files: file,
