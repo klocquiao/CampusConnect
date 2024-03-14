@@ -3,7 +3,8 @@ import {useDropzone} from 'react-dropzone'
 import { uploadImage } from '../apis/apis';
 
 const Dropzone = (props) => {
-    const onDrop = useCallback(async acceptedFiles => {
+    
+    const onDrop = useCallback(acceptedFiles => {
             const formData = new FormData();
             const file = acceptedFiles.at(-1);
             const username = 'swag'.concat('_user');
