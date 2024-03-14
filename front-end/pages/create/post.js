@@ -17,6 +17,7 @@ export default function Post(){
 
     useEffect(() => {
         if(window){
+            console.log(window.location.hostname);
             setBucketUrl(window.location.hostname);
         }
     }, []);
