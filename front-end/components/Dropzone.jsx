@@ -6,9 +6,10 @@ const Dropzone = (props) => {
     const onDrop = useCallback(async acceptedFiles => {
             const formData = new FormData();
             const file = acceptedFiles.at(-1);
+            const username = 'swag'.concat('_user');
+            const bucketUrl = props.bucketUrl;
             formData.append('file', file);
-            const resp = await uploadImage(formData, file, 'swag'.concat('_user')); // TODO change user name to actual username
-            const respJson = await resp.json();
+            uploadImage(bucketUrl, formData, file, username); // TODO change user name to actual username
             props.setRecentImage(file);
             props.setUploadStatus(respJson.message);
         }, [])
