@@ -56,7 +56,6 @@ const uploadImage = async (bucketUrl, data, file, username) => {
             method: 'POST',
             body: data,
             files: file,
-            bucket: bucketUrl,
         })
     } catch (error) {
         console.log(error);
