@@ -17,8 +17,10 @@ export default function Post(){
 
     useEffect(() => {
         if(window){
-            console.log(window.location.hostname);
-            setBucketUrl(window.location.hostname);
+            var hostUrl = window.location.hostname;
+            hostUrl.replace('.','-');
+            console.log(hostUrl);
+            setBucketUrl(hostUrl);
         }
     }, []);
 
