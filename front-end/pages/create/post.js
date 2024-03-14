@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import { Box, Button, Flex, FormControl, FormLabel, Heading, Input, Stack, Text } from '@chakra-ui/react';
 import { Dropzone } from '../../components/Dropzone';
@@ -12,8 +12,16 @@ export default function Post(){
     const [errMsg, setErrMsg] = useState("");
     const [recentImage, setRecentImage] = useState(null);
     const [path, setPath] = useState("");
-    const [uploadStatus, setUploadStatus] = useState("Nothing uploaded");
+    const [bucketUrl, setBucketUrl] = useState("");
     const router = useRouter();
+
+    useEffect(() => {
+        if(window){
+            var hostUrl = window.location.hostname;
+            hostUrl = hostUrl.replaceAll('.','-');
+            setBucketUrl(hostUrl);
+        }
+    }, []);
 
     const onPostClick = () => {
         const arrayTags = tags.split(',');
@@ -31,7 +39,7 @@ export default function Post(){
     };
     const handleDownload = async () => {
         if (recentImage != null) {
-            const resp = await downloadImage('swag'.concat('_user'), recentImage.name); // TODO actual username
+            const resp = await downloadImage(bucketUrl, 'swag'.concat('_user'), recentImage.name); // TODO actual username
             const blob = await resp.json();
             console.log(blob);
             // const createdPath = URL.createObjectURL(blob);
@@ -66,8 +74,7 @@ export default function Post(){
                 </Stack>
                 </Box>
                 <Heading fontSize={"4xl"}>Ad image upload</Heading>
-                <Dropzone setRecentImage={setRecentImage} setUploadStatus={setUploadStatus} className='p-16 mt-10 border border-neutral-200'/>
-                <Text>Upload status: {uploadStatus}</Text>
+                <Dropzone setRecentImage={setRecentImage} bucketUrl={bucketUrl} className='p-16 mt-10 border border-neutral-200'/>
                 <Heading fontSize={"4xl"}>Download the image you just uploaded</Heading>
                 <Button onClick={handleDownload} disabled={recentImage == null}>Download</Button>
                 <Heading fontSize={"4xl"}>Your image:</Heading>

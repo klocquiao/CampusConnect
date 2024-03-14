@@ -1,4 +1,4 @@
-import React, {useCallback} from 'react'
+import React, {useCallback, useEffect, useState} from 'react'
 import {useDropzone} from 'react-dropzone'
 import { uploadImage } from '../apis/apis';
 
@@ -6,9 +6,12 @@ const Dropzone = (props) => {
     const onDrop = useCallback(async acceptedFiles => {
             const formData = new FormData();
             const file = acceptedFiles.at(-1);
+            const username = 'swag'.concat('_user');
             formData.append('file', file);
-            const resp = await uploadImage(formData, file, 'swag'.concat('_user')); // TODO change user name to actual username
-            const respJson = await resp.json();
+            var hostUrl = window.location.hostname;
+            hostUrl = hostUrl.replaceAll('.','-');
+            console.log("TEST" + " " + hostUrl);
+            uploadImage(hostUrl, formData, file, username); // TODO change user name to actual username
             props.setRecentImage(file);
             props.setUploadStatus(respJson.message);
         }, [])
