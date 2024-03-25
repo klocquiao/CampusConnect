@@ -12,13 +12,33 @@ app = Flask(__name__)
 # Initialize Google Cloud Storage client
 storage_client = storage.Client()
 
-def create_bucket_if_not_exists(bucket_name):
+def get_project_id():
+    """Retrieve the project ID from the metadata server."""
+    metadata_server = "http://metadata.google.internal/computeMetadata/v1/project/project-id"
+    metadata_flavor = {'Metadata-Flavor': 'Google'}
+
+    try:
+        response = request.get(metadata_server, headers=metadata_flavor)
+        if response.status_code == 200:
+            return response.text
+        else:
+            return None
+    except Exception as e:
+        print(f"Error retrieving project ID: {e}")
+        return None
+
+def create_bucket_if_not_exists():
     """Creates a Google Cloud Storage bucket if it doesn't exist."""
+    bucket_name = f'{get_project_id()}-bucket'
     try:
         bucket = storage_client.get_bucket(bucket_name)
     except:
         bucket = storage_client.create_bucket(bucket_name)
     return bucket
+
+def get_user_filename(username, filename):
+    """Generate a unique file name for each user uploaded picture"""
+    return f'{username}_{filename}'
 
 @app.route('/upload', methods=['POST'])
 def upload_photo():
@@ -34,12 +54,12 @@ def upload_photo():
         return jsonify({'error': 'File parameter is required'}), 400
 
     # Upload file to Google Cloud Storage
-    bucket_name = f'{username}'
-    bucket = create_bucket_if_not_exists(bucket_name)
-    blob = bucket.blob(file.filename)
+    user_filename = get_user_filename(username, file.filename)
+    bucket = create_bucket_if_not_exists()
+    blob = bucket.blob(user_filename)
     blob.upload_from_file(file)
 
-    return jsonify({'message': f'File {file.filename} uploaded to bucket {bucket_name}'}), 200
+    return jsonify({'message': f'File {user_filename} uploaded to bucket: {get_project_id()}-bucket'}), 200
 
 @app.route('/download', methods=['GET'])
 def download_photo():
