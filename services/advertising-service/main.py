@@ -61,6 +61,7 @@ def upload_photo():
 
     return jsonify({'message': f'File {user_filename} uploaded to bucket: {get_project_id()}-bucket'}), 200
 
+#TODO: Refactor download_photo() to use the project bucket + implement unit test
 @app.route('/download', methods=['GET'])
 def download_photo():
     # Get username from request parameters
