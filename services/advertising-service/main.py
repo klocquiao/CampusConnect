@@ -68,20 +68,30 @@ def download_photo():
     username = request.args.get('username')
     if not username:
         return jsonify({'error': 'Username parameter is required'}), 400
-
+    
     # Get filename from request parameters
     filename = request.args.get('filename')
     if not filename:
         return jsonify({'error': 'Filename parameter is required'}), 400
 
     # Download file from Google Cloud Storage
-    bucket_name = f'{username}'
-    bucket = storage_client.bucket(bucket_name)
-    blob = bucket.blob(filename)
-    file_path = f'/tmp/{filename}'  # Save the file to /tmp directory
+    user_filename = get_user_filename(username, filename)
+
+    # Get project bucket
+    bucket_name = f'{get_project_id()}-bucket'
+    try:
+        bucket = storage_client.get_bucket(bucket_name)
+    except:
+        return jsonify({'error' : f'Bucket: {bucket_name} does not exist'}), 404
+
+    blob = bucket.blob(user_filename)
+    if not blob.exists():
+        return jsonify({'error': f'File: {user_filename} not found in project bucket: {bucket_name}'}), 404
+    
+    file_path = f'/tmp/{user_filename}'  # Save the file to /tmp directory
     blob.download_to_filename(file_path)
 
-    return jsonify({'message': f'File {filename} downloaded from bucket {bucket_name}'}), 200
+    return jsonify({'message': f'File {user_filename} downloaded from bucket {bucket_name}'}), 200
 
 if __name__ == "__main__":
     app.run(debug=True, host='0.0.0.0', port=int(os.environ.get('PORT', 8080)))
