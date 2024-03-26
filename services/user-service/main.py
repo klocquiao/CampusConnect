@@ -3,6 +3,7 @@ import datetime
 import json
 import os
 import uuid
+import firebase_admin
 
 from flask import Flask, request
 
@@ -11,6 +12,8 @@ from firebase_admin import auth
 
 app = Flask(__name__)
 ds_client = datastore.Client()
+
+fb_app = firebase_admin.initialize_app()
 
 def error500():
     resp = {
