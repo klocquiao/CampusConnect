@@ -7,6 +7,7 @@ import uuid
 from flask import Flask, request
 
 from google.cloud import datastore
+from firebase_admin import auth
 
 app = Flask(__name__)
 ds_client = datastore.Client()
@@ -22,29 +23,18 @@ def error500():
 def index():
     return 'User service'
 
-
-
 @app.route('/api/users/create', methods=['POST'])
 @app.route('/user-service/api/users/create', methods=['POST'])
 
 def user_create():
     user_name = request.json['user_name']
-    password = request.json['password']
+    psw = request.json['password']
     
-    user = {
-        'user_id': str(uuid.uuid4()),
-        'user_name': user_name,
-        'password': password
-    }
-
-    with ds_client.transaction():
-        incomplete_key = ds_client.key('User')
-        order_entity = datastore.Entity(key=incomplete_key)
-        order_entity.update(user)
-        ds_client.put(order_entity)
-
-    return user, 200
-
+    user = auth.create_user(
+        email = user_name,
+        password = psw,
+    )
+    return user.uid, 200
 
 @app.route('/api/users/<user_name>',methods=['GET'])
 @app.route('/user-service/api/users/<user_name>',methods=['GET'])

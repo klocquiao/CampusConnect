@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 import { Box, Button, Flex, FormControl, FormLabel, Heading, Input, Stack, Text } from '@chakra-ui/react';
 import { Dropzone } from '../../components/Dropzone';
@@ -12,16 +12,7 @@ export default function Post(){
     const [errMsg, setErrMsg] = useState("");
     const [recentImage, setRecentImage] = useState(null);
     const [path, setPath] = useState("");
-    const [bucketUrl, setBucketUrl] = useState("");
     const router = useRouter();
-
-    useEffect(() => {
-        if(window){
-            var hostUrl = window.location.hostname;
-            hostUrl = hostUrl.replaceAll('.','-');
-            setBucketUrl(hostUrl);
-        }
-    }, []);
 
     const onPostClick = () => {
         const arrayTags = tags.split(',');
