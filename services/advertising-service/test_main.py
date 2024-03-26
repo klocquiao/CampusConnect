@@ -46,11 +46,14 @@ class TestGeneralSuccess(unittest.TestCase):
         mock_project_id = 'mock-project-id'
         mock_get_project_id.return_value = mock_project_id
         mock_bucket = MagicMock()
+        mock_bucket.name = mock_project_id
         mock_get_bucket.return_value = mock_bucket
+        mock_get_bucket.name.return_value = mock_get_project_id
 
         mock_blob = MagicMock()
         mock_blob.exists.return_value = True
-        mock_bucket.bloc.return_balue = mock_blob
+        mock_bucket.blob.return_value = mock_blob
+
 
         username = 'test_user'
         filename = 'test_file.jpg'
@@ -63,7 +66,7 @@ class TestGeneralSuccess(unittest.TestCase):
         self.assertEqual(response.status_code, 200)
 
         # Check if the expected message is in the response JSON
-        expected_message = f'File {username}_{filename} downloaded from bucket {mock_project_id}-bucket'
+        expected_message = f'File {username}_{filename} downloaded from bucket {mock_project_id}'
         self.assertIn(expected_message, response.json['message'])
 
 

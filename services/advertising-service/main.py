@@ -57,6 +57,7 @@ def upload_photo():
     user_filename = get_user_filename(username, file.filename)
     bucket = create_bucket_if_not_exists()
     blob = bucket.blob(user_filename)
+    
     blob.upload_from_file(file)
 
     return jsonify({'message': f'File {user_filename} uploaded to bucket: {get_project_id()}-bucket'}), 200
@@ -77,21 +78,16 @@ def download_photo():
     # Download file from Google Cloud Storage
     user_filename = get_user_filename(username, filename)
 
-    # Get project bucket
-    bucket_name = f'{get_project_id()}-bucket'
-    try:
-        bucket = storage_client.get_bucket(bucket_name)
-    except:
-        return jsonify({'error' : f'Bucket: {bucket_name} does not exist'}), 404
+    bucket = create_bucket_if_not_exists()
 
     blob = bucket.blob(user_filename)
     if not blob.exists():
-        return jsonify({'error': f'File: {user_filename} not found in project bucket: {bucket_name}'}), 404
+        return jsonify({'error': f'File: {user_filename} not found in project bucket: {bucket.name}'}), 404
     
     file_path = f'/tmp/{user_filename}'  # Save the file to /tmp directory
     blob.download_to_filename(file_path)
 
-    return jsonify({'message': f'File {user_filename} downloaded from bucket {bucket_name}'}), 200
+    return jsonify({'message': f'File {user_filename} downloaded from bucket {bucket.name}'}), 200
 
 if __name__ == "__main__":
     app.run(debug=True, host='0.0.0.0', port=int(os.environ.get('PORT', 8080)))
