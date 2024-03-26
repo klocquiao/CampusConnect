@@ -3,9 +3,12 @@ import datetime
 import json
 import os
 import uuid
+import time
 
 from flask import Flask, request, jsonify
 from google.cloud import storage
+from google.api_core.retry import Retry
+from google.api_core.exceptions import RetryError
 
 app = Flask(__name__)
 
@@ -26,19 +29,46 @@ def get_project_id():
     except Exception as e:
         print(f"Error retrieving project ID: {e}")
         return None
+    
+def exponential_backoff_retry():
+    """Exponential backoff retry mechanism."""
+    initial_interval = 1  # Initial interval in seconds
+    maximum_interval = 32  # Maximum interval in seconds
+    multiplier = 2  # Multiplier for interval increase
+    max_retries = 5  # Maximum number of retries
+    total_elapsed_time = 40  # Total elapsed time in seconds
+    deadline = time.time() + total_elapsed_time  # Deadline for retry
+
+    return Retry(
+        initial=initial_interval,
+        maximum=maximum_interval,
+        multiplier=multiplier,
+        deadline=deadline,
+        max_retries=max_retries
+    )
 
 def create_bucket_if_not_exists():
     """Creates a Google Cloud Storage bucket if it doesn't exist."""
     bucket_name = f'{get_project_id()}-bucket'
     try:
-        bucket = storage_client.get_bucket(bucket_name)
-    except:
-        bucket = storage_client.create_bucket(bucket_name)
+        bucket = storage_client.get_bucket(bucket_name, retry=exponential_backoff_retry())
+    except Exception as e:
+        print(f"Error retrieving bucket: {e}")
+        return None
+
+    if bucket is None:
+        try:
+            bucket = storage_client.create_bucket(bucket_name, retry=exponential_backoff_retry())
+        except Exception as e:
+            print(f"Error creating bucket: {e}")
+            return None
     return bucket
 
 def get_user_filename(username, filename):
     """Generate a unique file name for each user uploaded picture"""
     return f'{username}_{filename}'
+
+
 
 @app.route('/upload', methods=['POST'])
 def upload_photo():
@@ -62,7 +92,6 @@ def upload_photo():
 
     return jsonify({'message': f'File {user_filename} uploaded to bucket: {get_project_id()}-bucket'}), 200
 
-#TODO: Refactor download_photo() to use the project bucket + implement unit test
 @app.route('/download', methods=['GET'])
 def download_photo():
     # Get username from request parameters
