@@ -3,12 +3,15 @@ import { useState } from 'react';
 import { Box, Button, Flex, FormControl, FormLabel, Heading, Input, Stack, Text } from '@chakra-ui/react';
 import { loginUser } from '../apis/apis';
 import { useUser } from '../context/UserContext';
+import { useRouter } from 'next/router';
 
 export default function Login(){
     const [signinEmail, setSigninEmail] = useState("");
     const [signinPw, setSigninPw] = useState("");
     const [errMsg, setErrMsg] = useState("");
     const {setUid} = useUser();
+
+    const router = useRouter();
 
     const onLogin = () => {
       loginUser({
