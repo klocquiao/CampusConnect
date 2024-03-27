@@ -3,4 +3,4 @@ import { getAuth } from 'firebase/auth';
 
 const app = initializeApp();
 
-export const auth = getAuth(app);
+export const auth = getAuth(app, {});
