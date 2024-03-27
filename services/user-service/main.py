@@ -5,10 +5,12 @@ import os
 import uuid
 import firebase_admin
 
-from flask import Flask, request
-
+import google.auth.transport.requests
+import google.oauth2.id_token
 from google.cloud import datastore
 from firebase_admin import auth
+
+from flask import Flask, request
 
 app = Flask(__name__)
 ds_client = datastore.Client()
@@ -28,7 +30,6 @@ def index():
 
 @app.route('/api/users/create', methods=['POST'])
 @app.route('/user-service/api/users/create', methods=['POST'])
-
 def user_create():
     user_name = request.json['user_name']
     psw = request.json['password']
@@ -39,15 +40,33 @@ def user_create():
     )
     return user.uid, 200
 
-@app.route('/api/users/<user_name>',methods=['GET'])
-@app.route('/user-service/api/users/<user_name>',methods=['GET'])
-def user_name_get(user_name):
+@app.route('/api/users/login', methods=['POST'])
+@app.route('/user-service/api/users/login', methods=['POST'])
+def user_login():
+    user_name = request.json['user_name']
+    psw = request.json['password']
+
+    user = auth.get_user_by_email(user_name)
+    return user.uid, 200
+
+@app.route('/api/users/<uid>',methods=['GET'])
+@app.route('/user-service/api/users/<uid>',methods=['GET'])
+def user_name_get(uid):
 
     query = ds_client.query(kind='User')
-    query.add_filter('user_name', '=', user_name)
+    query.add_filter('user_name', '=', uid)
     results = list(query.fetch())
 
     return results[0], 200
+
+@app.route('/api/users/auth',methods=['GET'])
+@app.route('/user-service/api/users/auth',methods=['GET'])
+def user_auth():
+    id_token = request.headers["Authorization"].split(" ").pop()
+    request = google.auth.transport.requests.Request()
+    claims = google.oauth2.id_token.verify_firebase_token(id_token, request)
+    if not claims:
+        return "Unauthorized", 401
 
 if __name__ == "__main__":
     app.run(debug=True, host='0.0.0.0', port=int(os.environ.get('PORT', 8080)))

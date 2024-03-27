@@ -8,12 +8,10 @@ import Footer from '../components/Footer';
 
 // Import CSS
 import '../styles/globals.css';
+import { UserProvider } from '../context/UserContext';
 
 function MyApp({ Component, pageProps }) {
-
-  //Flags
-  const { isOpen, onOpen, onClose } = useDisclosure();
-
+  
   return(
     <div id="container">
       <Head>
@@ -23,7 +21,9 @@ function MyApp({ Component, pageProps }) {
       <ChakraProvider>
         <>
             <MainNavbar/>
-            <div id="main-content"><Component {...pageProps}/></div>
+            <UserProvider>
+              <div id="main-content"><Component {...pageProps}/></div>
+            </UserProvider>
             <Footer/>
         </>
       </ChakraProvider>

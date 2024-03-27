@@ -1,11 +1,25 @@
 import { useState } from 'react';
 
 import { Box, Button, Flex, FormControl, FormLabel, Heading, Input, Stack, Text } from '@chakra-ui/react';
+import { loginUser } from '../apis/apis';
+import { useUser } from '../context/UserContext';
 
 export default function Login(){
     const [signinEmail, setSigninEmail] = useState("");
     const [signinPw, setSigninPw] = useState("");
     const [errMsg, setErrMsg] = useState("");
+    const {setUid} = useUser();
+
+    const onLogin = () => {
+      loginUser({
+        user_name: signupUsername,
+        password: signupPw
+      }).then((resp) => {
+        console.log(resp);
+        setUid(resp.data);
+        router.push('/home');
+      });
+    }
 
     return(
       <div>
@@ -25,7 +39,7 @@ export default function Login(){
                     <FormLabel color="white">Password</FormLabel>
                     <Input color="white" type="password" name="password" placeholder="Password" value={signinPw} onChange={(event) => setSigninPw(event.target.value)} _placeholder={{color: "gray.300"}}/>
                   </FormControl>
-                  <Button colorScheme="teal">Log in</Button>
+                  <Button colorScheme="teal" onClick={onLogin}>Log in</Button>
                 </Stack>
               </Box>
             </Stack>
