@@ -4,6 +4,7 @@ import json
 import os
 import uuid
 import time
+import requests
 
 from flask import Flask, request, jsonify
 from google.cloud import storage
@@ -14,6 +15,16 @@ app = Flask(__name__)
 
 # Initialize Google Cloud Storage client
 storage_client = storage.Client()
+
+def check_storage():
+    try:
+        response = requests.get('https://www.googleapis.com/storage/v1/b', timeout=5)
+        if response.status_code == 200:
+            return True, None
+        else:
+            return False, 'Google Cloud Storage service is not accessible'
+    except Exception as e:
+        return False, f'Error accessing Google Cloud Storage: {str(e)}'
 
 def get_project_id():
     """Retrieve the project ID from the metadata server."""
@@ -69,6 +80,22 @@ def get_user_filename(username, filename):
     return f'{username}_{filename}'
 
 
+# Health Check endpoint
+# For use by Google Cloud Load Balancing
+@app.route('/health', methods=['GET'])
+def health_check():
+    # Perform custom health checks
+    is_healthy, message = check_storage()
+
+    # TODO: Implement a list of health check functions to run
+    # Allows us to sequentially call multiple health checks if needed
+
+    # If all checks pass, return a healthy status
+    if is_healthy:
+        return jsonify({'status': 'OK'}), 200
+    else:
+        # If any checks fail, return an error status along with the reason
+        return jsonify({'status': 'Error', 'message': message}), 500
 
 @app.route('/upload', methods=['POST'])
 def upload_photo():
