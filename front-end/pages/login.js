@@ -1,9 +1,11 @@
 import { useState } from 'react';
+import { signInWithEmailAndPassword } from 'firebase/auth';
 
 import { Box, Button, Flex, FormControl, FormLabel, Heading, Input, Stack, Text } from '@chakra-ui/react';
 import { loginUser } from '../apis/apis';
 import { useUser } from '../context/UserContext';
 import { useRouter } from 'next/router';
+import { auth } from '../special/FirebaseConfig';
 
 export default function Login(){
     const [signinEmail, setSigninEmail] = useState("");
@@ -14,13 +16,14 @@ export default function Login(){
     const router = useRouter();
 
     const onLogin = () => {
-      loginUser({
-        user_name: signinEmail,
-        password: signinPw
-      }).then((resp) => {
+      signInWithEmailAndPassword(auth, signinEmail, signinPw)
+      .then((resp) => {
         console.log(resp);
         setUid(resp.data);
         router.push('/home');
+      })
+      .catch((err) => {
+        console.log(err);
       });
     }
 
