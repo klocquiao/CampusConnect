@@ -69,6 +69,21 @@ class TestGeneralSuccess(unittest.TestCase):
         expected_message = f'File {username}_{filename} downloaded from bucket {mock_project_id}'
         self.assertIn(expected_message, response.json['message'])
 
+    @patch('main.check_storage')
+    def test_health_check_failure(self, mock_check_storage):
+        # Mock the check_storage function to return False with an error message
+        mock_check_storage.return_value = (False, 'Google Cloud Storage service is not accessible')
+
+        # Send GET request to /health endpoint
+        response = self.app.get('/health')
+
+        # Check if the response status code is 500
+        self.assertEqual(response.status_code, 500)
+
+        # Check if the error message is in the response JSON
+        self.assertEqual(response.json['status'], 'Error')
+        self.assertEqual(response.json['message'], 'Google Cloud Storage service is not accessible')
+
 
 if __name__ == '__main__':
     unittest.main()
