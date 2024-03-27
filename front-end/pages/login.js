@@ -12,8 +12,8 @@ export default function Login(){
 
     const onLogin = () => {
       loginUser({
-        user_name: signupUsername,
-        password: signupPw
+        user_name: signinEmail,
+        password: signinPw
       }).then((resp) => {
         console.log(resp);
         setUid(resp.data);
