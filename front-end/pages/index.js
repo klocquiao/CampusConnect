@@ -24,8 +24,6 @@ function Blur(props){
 }
 
 export default function Index() {
-
-  
   return (
     <Box position="relative">
       <Container
