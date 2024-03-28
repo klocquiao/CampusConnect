@@ -1,5 +1,8 @@
 import React from 'react';
 import Head from 'next/head';
+import { getApp, initializeApp } from 'firebase/app';
+import { getAuth } from 'firebase/auth';
+import { useRouter } from 'next/router';
 
 import { ChakraProvider, useDisclosure } from '@chakra-ui/react';
 
@@ -11,6 +14,10 @@ import '../styles/globals.css';
 import { UserProvider } from '../context/UserContext';
 
 function MyApp({ Component, pageProps }) {
+
+  const app = initializeApp();
+
+  const auth = getAuth(app);
   
   return(
     <div id="container">
@@ -22,7 +29,7 @@ function MyApp({ Component, pageProps }) {
         <>
             <MainNavbar/>
             <UserProvider>
-              <div id="main-content"><Component {...pageProps}/></div>
+              <div id="main-content"><Component {...pageProps} auth={auth}/></div>
             </UserProvider>
             <Footer/>
         </>

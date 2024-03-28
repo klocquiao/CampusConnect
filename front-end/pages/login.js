@@ -5,9 +5,8 @@ import { Box, Button, Flex, FormControl, FormLabel, Heading, Input, Stack, Text 
 import { loginUser } from '../apis/apis';
 import { useUser } from '../context/UserContext';
 import { useRouter } from 'next/router';
-import { auth } from '../special/FirebaseConfig';
 
-export default function Login(){
+export default function Login({auth}){
     const [signinEmail, setSigninEmail] = useState("");
     const [signinPw, setSigninPw] = useState("");
     const [errMsg, setErrMsg] = useState("");
