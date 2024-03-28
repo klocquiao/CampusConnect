@@ -1,8 +1,5 @@
 import React from 'react';
 import Head from 'next/head';
-import { getApp } from 'firebase/app';
-import { getAuth } from 'firebase/auth';
-import { useRouter } from 'next/router';
 
 import { ChakraProvider, useDisclosure } from '@chakra-ui/react';
 
@@ -14,10 +11,6 @@ import '../styles/globals.css';
 import { UserProvider } from '../context/UserContext';
 
 function MyApp({ Component, pageProps }) {
-  
-  const app = getApp(useRouter().query.__firebaseAppName);
-
-  const auth = getAuth(app);
 
   return(
     <div id="container">
