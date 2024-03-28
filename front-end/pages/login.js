@@ -16,9 +16,7 @@ export default function Login(){
 
     const onLogin = () => {
       signInWithEmailAndPassword(auth, signinEmail, signinPw)
-      .then((resp) => {
-        console.log(resp);
-        setUid(resp.data);
+      .then(() => {
         router.push('/home');
       })
       .catch((err) => {
