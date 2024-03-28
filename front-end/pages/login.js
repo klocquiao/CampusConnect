@@ -4,8 +4,9 @@ import { signInWithEmailAndPassword } from 'firebase/auth';
 import { Box, Button, Flex, FormControl, FormLabel, Heading, Input, Stack, Text } from '@chakra-ui/react';
 import { useUser } from '../context/UserContext';
 import { useRouter } from 'next/router';
+import { auth } from '../special/FirebaseConfig';
 
-export default function Login({auth}){
+export default function Login(){
     const [signinEmail, setSigninEmail] = useState("");
     const [signinPw, setSigninPw] = useState("");
     const [errMsg, setErrMsg] = useState("");

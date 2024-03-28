@@ -22,7 +22,7 @@ function MyApp({ Component, pageProps }) {
         <>
             <MainNavbar/>
             <UserProvider>
-              <div id="main-content"><Component {...pageProps} auth={auth}/></div>
+              <div id="main-content"><Component {...pageProps}/></div>
             </UserProvider>
             <Footer/>
         </>
