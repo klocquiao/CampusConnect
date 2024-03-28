@@ -113,7 +113,7 @@ class TestUnsuccessfulOperations(unittest.TestCase):
         response = self.app.post('/upload?username=', data=data, content_type='multipart/form-data')
         expected_response = 'Username parameter is required'
         self.assertIn(expected_response, response.json['error'])
-        # Check if the response status code is 200
+        # Check if the response status code is 400
         self.assertEqual(response.status_code, 400)
     
     def test_download_photo_no_username(self):
@@ -127,6 +127,33 @@ class TestUnsuccessfulOperations(unittest.TestCase):
         self.assertIn(expected_response, response.json['error'])
     
     # Test for no file
+    @patch('main.get_project_id')
+    def test_upload_no_file(self, mock_get_project_id):
+        mock_project_id = 'mock-project-id'
+        mock_get_project_id.return_value = mock_project_id
+        # Prepare mock request parameters
+        username = 'some_user'
+        file_content = b''
+        data = {
+            'username' : username
+        }
+        response = self.app.post('/upload?username=' + username, data=data, content_type='multipart/form-data')
+        expected_response = 'File parameter is required'
+        self.assertIn(expected_response, response.json['error'])
+        # Check if the response status code is 400
+        self.assertEqual(response.status_code, 400)
+    
+    @patch('main.get_project_id')
+    def test_download_no_file(self, mock_get_project_id):
+        url = f'/download?username=some_user'
+        response = self.app.get(url)
+
+        self.assertEqual(response.status_code, 400)
+
+        expected_response = 'Filename parameter is required'
+        self.assertIn(expected_response, response.json['error'])
+        # Check if the response status code is 400
+        self.assertEqual(response.status_code, 400)
         
     # Test for bad bucket
 
