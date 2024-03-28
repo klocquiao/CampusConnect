@@ -69,6 +69,20 @@ class TestGeneralSuccess(unittest.TestCase):
         expected_message = f'File {username}_{filename} downloaded from bucket {mock_project_id}'
         self.assertIn(expected_message, response.json['message'])
 
+
+class TestUnsuccessfulOperations(unittest.TestCase):
+    def setUp(self):
+        # Create a Flask test client
+        self.app = app.test_client()
+
+        # Mock any external dependencies (optional)
+        self.mock_storage_client = MagicMock()
+        patch('main.storage_client', self.mock_storage_client).start()
+
+    def tearDown(self):
+        # Stop any patches (if used)
+        patch.stopall()
+    
     @patch('main.check_storage')
     def test_health_check_failure(self, mock_check_storage):
         # Mock the check_storage function to return False with an error message
@@ -83,19 +97,6 @@ class TestGeneralSuccess(unittest.TestCase):
         # Check if the error message is in the response JSON
         self.assertEqual(response.json['status'], 'Error')
         self.assertEqual(response.json['message'], 'Google Cloud Storage service is not accessible')
-
-class TestUnsuccessfulOperations(unittest.TestCase):
-    def setUp(self):
-        # Create a Flask test client
-        self.app = app.test_client()
-
-        # Mock any external dependencies (optional)
-        self.mock_storage_client = MagicMock()
-        patch('main.storage_client', self.mock_storage_client).start()
-
-    def tearDown(self):
-        # Stop any patches (if used)
-        patch.stopall()
 
     # Test for no username
     @patch('main.get_project_id')
@@ -143,8 +144,7 @@ class TestUnsuccessfulOperations(unittest.TestCase):
         # Check if the response status code is 400
         self.assertEqual(response.status_code, 400)
     
-    @patch('main.get_project_id')
-    def test_download_no_file(self, mock_get_project_id):
+    def test_download_no_file(self):
         url = f'/download?username=some_user'
         response = self.app.get(url)
 
@@ -155,7 +155,6 @@ class TestUnsuccessfulOperations(unittest.TestCase):
         # Check if the response status code is 400
         self.assertEqual(response.status_code, 400)
         
-    # Test for bad bucket
 
 
 

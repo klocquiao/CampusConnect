@@ -113,6 +113,9 @@ def upload_photo():
     # Upload file to Google Cloud Storage
     user_filename = get_user_filename(username, file.filename)
     bucket = create_bucket_if_not_exists()
+    if bucket is None:
+        return jsonify({'error' : 'Could not find project bucket'}), 404
+    
     blob = bucket.blob(user_filename)
     
     blob.upload_from_file(file)
@@ -135,6 +138,8 @@ def download_photo():
     user_filename = get_user_filename(username, filename)
 
     bucket = create_bucket_if_not_exists()
+    if bucket is None:
+        return jsonify({'error' : 'Could not find project bucket'}), 404
 
     blob = bucket.blob(user_filename)
     if not blob.exists():
