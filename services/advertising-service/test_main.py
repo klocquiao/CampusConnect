@@ -84,6 +84,53 @@ class TestGeneralSuccess(unittest.TestCase):
         self.assertEqual(response.json['status'], 'Error')
         self.assertEqual(response.json['message'], 'Google Cloud Storage service is not accessible')
 
+class TestUnsuccessfulOperations(unittest.TestCase):
+    def setUp(self):
+        # Create a Flask test client
+        self.app = app.test_client()
+
+        # Mock any external dependencies (optional)
+        self.mock_storage_client = MagicMock()
+        patch('main.storage_client', self.mock_storage_client).start()
+
+    def tearDown(self):
+        # Stop any patches (if used)
+        patch.stopall()
+
+    # Test for no username
+    @patch('main.get_project_id')
+    def test_upload_photo_no_username(self, mock_get_project_id):
+        mock_project_id = 'mock-project-id'
+        mock_get_project_id.return_value = mock_project_id
+        # Prepare mock request parameters
+        filename = 'test_file.jpg'
+        file_content = b''
+        data = {
+            'file': (BytesIO(file_content), filename)  # Simulate file contents
+        }
+
+        # Send POST request to /upload endpoint
+        response = self.app.post('/upload?username=', data=data, content_type='multipart/form-data')
+        expected_response = 'Username parameter is required'
+        self.assertIn(expected_response, response.json['error'])
+        # Check if the response status code is 200
+        self.assertEqual(response.status_code, 400)
+    
+    def test_download_photo_no_username(self):
+        filename = 'test_file.jpg'
+        url = f'/download?username=&filename={filename}'
+        response = self.app.get(url)
+
+        self.assertEqual(response.status_code, 400)
+
+        expected_response = 'Username parameter is required'
+        self.assertIn(expected_response, response.json['error'])
+    
+    # Test for no file
+        
+    # Test for bad bucket
+
+
 
 if __name__ == '__main__':
     unittest.main()
