@@ -24,14 +24,6 @@ const getUser = async ({urlUid, setUser}) => {
     }
 };
 
-const loginUser = async (data) => {
-    try {
-        return await axios.post('/user-service/api/users/login', data);
-    } catch (error) {
-        console.log(error);
-    }
-};
-
 // Post microservice - create posts
 const createPost = async (data) => {
     try {
@@ -82,7 +74,6 @@ const downloadImage = async (bucketUrl, username, filename) => {
 export {
     createUser,
     getUser,
-    loginUser,
     createPost,
     getPosts,
     uploadImage,

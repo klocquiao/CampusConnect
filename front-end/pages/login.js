@@ -2,7 +2,6 @@ import { useState } from 'react';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 
 import { Box, Button, Flex, FormControl, FormLabel, Heading, Input, Stack, Text } from '@chakra-ui/react';
-import { loginUser } from '../apis/apis';
 import { useUser } from '../context/UserContext';
 import { useRouter } from 'next/router';
 

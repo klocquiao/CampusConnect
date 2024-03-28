@@ -40,15 +40,6 @@ def user_create():
     )
     return user.uid, 200
 
-@app.route('/api/users/login', methods=['POST'])
-@app.route('/user-service/api/users/login', methods=['POST'])
-def user_login():
-    user_name = request.json['user_name']
-    psw = request.json['password']
-
-    user = auth.get_user_by_email(user_name)
-    return user.uid, 200
-
 @app.route('/api/users/<uid>',methods=['GET'])
 @app.route('/user-service/api/users/<uid>',methods=['GET'])
 def user_name_get(uid):
