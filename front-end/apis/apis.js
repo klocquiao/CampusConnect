@@ -24,6 +24,25 @@ const getUser = async ({urlUid, setUser}) => {
     }
 };
 
+// Users microserver - token authentication
+const checkUserAuth = async (token) => {
+    try{
+        await axios.get('/user-service/api/users/auth', {
+            headers: {
+                Authorization: `Bearer ${token}`,
+              },
+        })
+            .then((resp) => {
+                console.log(resp);
+            })
+            .catch((err) => {
+                console.log(err);
+            });
+    }catch(err){
+        console.log(err);
+    }
+}
+
 // Post microservice - create posts
 const createPost = async (data) => {
     try {
@@ -74,6 +93,7 @@ const downloadImage = async (bucketUrl, username, filename) => {
 export {
     createUser,
     getUser,
+    checkUserAuth,
     createPost,
     getPosts,
     uploadImage,
