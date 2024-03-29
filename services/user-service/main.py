@@ -13,9 +13,10 @@ from firebase_admin import auth
 from flask import Flask, request
 
 app = Flask(__name__)
-ds_client = datastore.Client()
 
+ds_client = datastore.Client()
 fb_app = firebase_admin.initialize_app()
+HTTP_REQUEST = google.auth.transport.requests.Request()
 
 def error500():
     resp = {
@@ -54,8 +55,7 @@ def user_name_get(uid):
 @app.route('/user-service/api/users/auth',methods=['GET'])
 def user_auth():
     id_token = request.headers["Authorization"].split(" ").pop()
-    request = google.auth.transport.requests.Request()
-    claims = google.oauth2.id_token.verify_firebase_token(id_token, request)
+    claims = google.oauth2.id_token.verify_firebase_token(id_token, HTTP_REQUEST)
     if not claims:
         return "Unauthorized", 401
     return "Authorized", 200
