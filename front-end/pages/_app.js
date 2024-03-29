@@ -1,4 +1,4 @@
-import React, { createContext, useEffect } from 'react';
+import React, { createContext, useEffect, useState } from 'react';
 import Head from 'next/head';
 
 import { ChakraProvider } from '@chakra-ui/react';
@@ -13,7 +13,7 @@ import { auth } from '../special/FirebaseConfig';
 export const UserContext = createContext();
 
 function MyApp({ Component, pageProps }) {
-  const [user, setUser] = useEffect(null);
+  const [user, setUser] = useState(null);
  
   //Check if user is logged in or not
   useEffect(() => {
