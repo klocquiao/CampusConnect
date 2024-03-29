@@ -58,6 +58,7 @@ def user_auth():
     claims = google.oauth2.id_token.verify_firebase_token(id_token, request)
     if not claims:
         return "Unauthorized", 401
+    return "Authorized", 200
 
 if __name__ == "__main__":
     app.run(debug=True, host='0.0.0.0', port=int(os.environ.get('PORT', 8080)))
