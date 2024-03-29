@@ -18,7 +18,9 @@ function MyApp({ Component, pageProps }) {
   //Check if user is logged in or not
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((userAuth) => {
-      if(user) setUser(userAuth);
+      if(userAuth){
+        setUser(userAuth);
+      }
     })
     return unsubscribe;
   }, []);
