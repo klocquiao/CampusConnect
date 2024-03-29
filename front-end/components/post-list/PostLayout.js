@@ -15,13 +15,13 @@ export default function PostLayout(){
     }, []);
 
     const onTestClick = () => {
-        user.getIdToken().then((token) =>{
-            if(token){
+        if(user){
+            user.getIdToken().then((token) =>{
                 checkUserAuth(token);
-            }else{
-                console.log("Not logged in");
-            }
-        })
+            })
+        }else{
+            console.log("Not logged in");
+        }
     };
  
     return(
