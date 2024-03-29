@@ -13,12 +13,7 @@ window with const firebaseConfig. Copy it here:
 */
 
 const firebaseConfig = {
-    apiKey: "AIzaSyDZJbpmAoSvcp2YyQ8tweVRaghjBzu-HTc",
-    authDomain: "campus-connect-cmpt474-cbe1f.firebaseapp.com",
-    projectId: "campus-connect-cmpt474",
-    storageBucket: "campus-connect-cmpt474.appspot.com",
-    messagingSenderId: "431311462069",
-    appId: "1:431311462069:web:fe75a2c83db09d86b628fc"
+
 };
 
 const app = initializeApp(firebaseConfig);
