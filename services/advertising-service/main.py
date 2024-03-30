@@ -27,20 +27,11 @@ def check_storage():
         return False, f'Error accessing Google Cloud Storage: {str(e)}'
 
 def get_project_id():
-    """Retrieve the project ID from the metadata server."""
-    metadata_server = "http://metadata.google.internal/computeMetadata/v1/project/project-id"
-    metadata_flavor = {'Metadata-Flavor': 'Google'}
+    project_id = os.environ.get('PROJECT_ID')
+    if not project_id:
+        raise ValueError('PROJECT_ID environment variable not found')
+    return project_id
 
-    try:
-        response = request.get(metadata_server, headers=metadata_flavor)
-        if response.status_code == 200:
-            return response.text
-        else:
-            return None
-    except Exception as e:
-        print(f"Error retrieving project ID: {e}")
-        return None
-    
 def exponential_backoff_retry():
     """Exponential backoff retry mechanism."""
     initial_interval = 1  # Initial interval in seconds
@@ -60,25 +51,40 @@ def exponential_backoff_retry():
 
 def create_bucket_if_not_exists():
     """Creates a Google Cloud Storage bucket if it doesn't exist."""
-    bucket_name = f'{get_project_id()}-bucket'
+    project_id = get_project_id()
+    if not project_id:
+        raise ValueError('Project ID not found')
+
+    bucket_name = f'{project_id}-bucket'
+
     try:
         bucket = storage_client.get_bucket(bucket_name, retry=exponential_backoff_retry())
     except Exception as e:
-        print(f"Error retrieving bucket: {e}")
-        return None
+        print(f"Couldnt get bucket {bucket_name}, trying to create it instead")
+        bucket = None
 
     if bucket is None:
         try:
             bucket = storage_client.create_bucket(bucket_name, retry=exponential_backoff_retry())
         except Exception as e:
-            print(f"Error creating bucket: {e}")
-            return None
+            print(f"Error creating bucket: {e}, have to fail")
+            raise RuntimeError(f"Failed to create bucket: {e}")
+
     return bucket
+
 
 def get_user_filename(username, filename):
     """Generate a unique file name for each user uploaded picture"""
     return f'{username}_{filename}'
 
+@app.route('/project_id_endpoint', methods=['GET'])
+def get_project_id_endpoint():
+    project_id = os.environ.get('PROJECT_ID')
+
+    if project_id:
+        return jsonify({'project_id': project_id}), 200
+    else:
+        return jsonify({'error': 'Project ID environment variable not found'}), 500
 
 # Health Check endpoint
 # For use by Google Cloud Load Balancing
