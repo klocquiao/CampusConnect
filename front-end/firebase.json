@@ -15,18 +15,8 @@
         }
       },
       {
-        "source": "/posting-service/**",
-        "run": {
-          "serviceId": "posting-service",
-          "region": "us-central1"
-        }
-      },
-      {
         "source": "/user-service/**",
-        "run": {
-          "serviceId": "user-service",
-          "region": "us-west1"
-        }
+        "destination": "http://34.36.231.244"
       },
       {
         "source": "/upload**",
