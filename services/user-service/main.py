@@ -7,8 +7,10 @@ import uuid
 from flask import Flask, request
 
 from google.cloud import datastore
+from flask_cors import CORS
 
 app = Flask(__name__)
+CORS(app)
 ds_client = datastore.Client()
 
 def error500():

@@ -16,7 +16,7 @@
       },
       {
         "source": "/user-service/**",
-        "destination": "http://34.36.231.244/"
+        "destination": "https://34.36.231.244"
       },
       {
         "source": "/upload**",
