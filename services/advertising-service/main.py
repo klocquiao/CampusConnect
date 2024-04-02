@@ -125,10 +125,10 @@ def check_auth(id_token):
     # check if user is logged in using user_service
     url = USER_SERVICE_URL + '/user-service/api/users/auth'
     headers = {
-        'Authorization': 'Bearer {}'.format(id_token)
+        'Authorization': 'Bearer ' + id_token 
     }
     
-    response = requests.get(url=url, headers=headers, timeout=5)
+    response = requests.get(url, headers, timeout=5)
     if response.status_code == 200:
         return True
     else:
