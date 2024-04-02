@@ -95,7 +95,7 @@ def check_auth(id_token):
         'Authorization': 'Bearer {}'.format(id_token)
     }
     
-    response = requests.get(url, headers, timeout=5)
+    response = requests.get(url=url, headers=headers, timeout=5)
     if response.status_code == 200:
         return True
     else:
