@@ -33,8 +33,8 @@ function MyApp({ Component, pageProps }) {
       </Head>
       <ChakraProvider>
         <>
-            <MainNavbar/>
             <UserContext.Provider value={user}>
+              <MainNavbar/>
               <div id="main-content"><Component {...pageProps}/></div>
             </UserContext.Provider>
             <Footer/>

@@ -54,7 +54,7 @@ def user_name_get(uid):
 @app.route('/api/users/auth',methods=['GET'])
 @app.route('/user-service/api/users/auth',methods=['GET'])
 def user_auth():
-    id_token = request.headers["Authorization"].split(" ").pop()
+    id_token = request.headers["Authorization"]
     claims = google.oauth2.id_token.verify_firebase_token(id_token, HTTP_REQUEST)
     if not claims:
         return "Unauthorized", 401
