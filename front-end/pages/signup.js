@@ -21,7 +21,6 @@ export default function Signup(){
 
     const handleSignUp = () => {
       createUser({
-        user_id: signupUsername,
         user_name: signupUsername,
         password: signupPw
       }).then((resp) => {

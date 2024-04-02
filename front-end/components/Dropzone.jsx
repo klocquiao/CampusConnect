@@ -10,7 +10,6 @@ const Dropzone = (props) => {
             formData.append('file', file);
             var hostUrl = window.location.hostname;
             hostUrl = hostUrl.replaceAll('.','-');
-            console.log("TEST" + " " + hostUrl);
             uploadImage(hostUrl, formData, file, username); // TODO change user name to actual username
             props.setRecentImage(file);
             props.setUploadStatus(respJson.message);
