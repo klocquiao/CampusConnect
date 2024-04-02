@@ -1,8 +1,6 @@
-import base64
-import datetime
-import json
 import os
 import uuid
+import urllib
 
 from flask import Flask, request
 
@@ -10,6 +8,9 @@ from google.cloud import datastore
 
 app = Flask(__name__)
 ds_client = datastore.Client()
+
+# Get user_service API url from env vars
+USER_SERVICE_URL = os.getenv('USER_SERVICE_URL')
 
 def error500():
     resp = {
@@ -29,6 +30,24 @@ def post_create():
     description = request.json['description']
     tags = request.json['tags']
     price = request.json['price']
+
+    # Get auth token from request parameters
+    id_token = request.headers["Authorization"].split(" ").pop()
+
+    if not id_token:
+        resp = {
+            'message': 'Authorization parameter is required.'
+        }
+        return resp, 400
+
+    # Call user_service to confirm user is logged in
+    auth_check = check_auth(id_token)
+
+    if(auth_check != 200):
+        resp = {
+            'message': 'Invalid auth token.'
+        }
+        return resp, 400
 
     posting = {
         'user_id': user_id,
@@ -68,6 +87,24 @@ def post_get(user_id):
     results = list(query.fetch())
 
     return results, 200
+
+def check_auth(id_token):
+    # check if user is logged in using user_service
+    url = USER_SERVICE_URL + '/user-service/api/users/auth'
+    headers = {
+        'Authorization': 'Bearer {}'.format(id_token)
+    }
+    req = urllib.request.Request(url, headers)
+    result = None
+    try:
+        with urllib.request.urlopen(req) as res:
+            result = res.getcode()
+    except urllib.error.HTTPError as err:
+        return 401
+    
+    if(result != 200):
+        return 401
+    return 200
 
 if __name__ == "__main__":
     app.run(debug=True, host='0.0.0.0', port=int(os.environ.get('PORT', 8080)))
