@@ -1,7 +1,6 @@
 import os
 import time
 import requests
-import urllib
 
 from flask import Flask, request, jsonify
 from google.cloud import storage
@@ -78,7 +77,7 @@ def upload_photo():
     # Call user_service to confirm user is logged in
     auth_check = check_auth(id_token)
 
-    if(auth_check != 200):
+    if(not auth_check):
         return jsonify({'error': 'Invalid auth token'}), 400
 
     # Upload file to Google Cloud Storage
@@ -110,7 +109,7 @@ def download_photo():
     # Call user_service to confirm user is logged in
     auth_check = check_auth(id_token)
 
-    if(auth_check != 200):
+    if(not auth_check):
         return jsonify({'error': 'Invalid auth token'}), 400
 
     # Download file from Google Cloud Storage
@@ -128,17 +127,13 @@ def check_auth(id_token):
     headers = {
         'Authorization': 'Bearer {}'.format(id_token)
     }
-    req = urllib.request.Request(url, headers)
-    result = None
-    try:
-        with urllib.request.urlopen(req) as res:
-            result = res.getcode()
-    except urllib.error.HTTPError as err:
-        return 401
     
-    if(result != 200):
-        return 401
-    return 200
+    response = requests.get(url, headers, timeout=5)
+    if response.status_code == 200:
+        return True
+    else:
+        # User service is not accessible
+        return False
 
 if __name__ == "__main__":
     app.run(debug=True, host='0.0.0.0', port=int(os.environ.get('PORT', 8080)))
