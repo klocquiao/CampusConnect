@@ -56,6 +56,7 @@ const checkUserAuth = async (token) => {
 const createPost = async (data, user) => {
     try {
         const token = await getUserToken(user);
+
         return await axios.post('/posting-service/api/posts/create', data, {
             headers: {
                 Authorization: `Bearer ${token}`,
