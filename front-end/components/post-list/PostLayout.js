@@ -3,7 +3,7 @@ import { Box, Button, Flex, Stack } from "@chakra-ui/react";
 import CreateButton from "./PostCreation";
 import PostList from "./PostList";
 import { useContext, useEffect, useState } from "react";
-import { checkUserAuth, getPosts } from "../../apis/apis";
+import { getPosts } from "../../apis/apis";
 import { UserContext } from "../../pages/_app";
 
 export default function PostLayout(){
@@ -13,16 +13,6 @@ export default function PostLayout(){
     useEffect(() => {
         getPosts(setPosts);
     }, []);
-
-    const onTestClick = () => {
-        if(user){
-            user.getIdToken().then((token) =>{
-                checkUserAuth(token);
-            })
-        }else{
-            console.log("Not logged in");
-        }
-    };
  
     return(
         <Flex 
@@ -33,7 +23,7 @@ export default function PostLayout(){
             gap={12}>
             <Stack>
                 <CreateButton/>
-                <Button onClick={onTestClick}>Test Token</Button>
+                <Button>Test Token</Button>
             </Stack>
             <Box flex='1'>
                 <PostList posts={posts}/>
