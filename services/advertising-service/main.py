@@ -49,40 +49,6 @@ def exponential_backoff_retry():
 
 def create_bucket_if_not_exists():
     """Creates a Google Cloud Storage bucket if it doesn't exist."""
-    try:
-        response = requests.get('https://www.googleapis.com/storage/v1/b', timeout=5)
-        if response.status_code == 200:
-            return True, None
-        else:
-            return False, 'Google Cloud Storage service is not accessible'
-    except Exception as e:
-        return False, f'Error accessing Google Cloud Storage: {str(e)}'
-
-def get_project_id():
-    project_id = os.environ.get('PROJECT_ID')
-    if not project_id:
-        raise ValueError('PROJECT_ID environment variable not found')
-    return project_id
-
-def exponential_backoff_retry():
-    """Exponential backoff retry mechanism."""
-    initial_interval = 1  # Initial interval in seconds
-    maximum_interval = 32  # Maximum interval in seconds
-    multiplier = 2  # Multiplier for interval increase
-    max_retries = 5  # Maximum number of retries
-    total_elapsed_time = 40  # Total elapsed time in seconds
-    deadline = time.time() + total_elapsed_time  # Deadline for retry
-
-    return Retry(
-        initial=initial_interval,
-        maximum=maximum_interval,
-        multiplier=multiplier,
-        deadline=deadline,
-        max_retries=max_retries
-    )
-
-def create_bucket_if_not_exists():
-    """Creates a Google Cloud Storage bucket if it doesn't exist."""
     project_id = get_project_id()
     if not project_id:
         raise ValueError('Project ID not found')

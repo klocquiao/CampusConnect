@@ -38,7 +38,7 @@ const checkUserAuth = async (token) => {
     try{
         await axios.get('/user-service/api/users/auth', {
             headers: {
-                Authorization: `Bearer ${token}`,
+                Authorization: `${token}`,
               },
         })
             .then((resp) => {
