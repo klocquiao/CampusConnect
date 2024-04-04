@@ -27,11 +27,11 @@ export default function Signup(){
         password: signupPw
       }).then((resp) => {
         console.log(resp);
-        // if(resp.message.includes("200")){
-        //   router.push('/login');
-        // }else{
-        //   setErrMsg(resp.message);
-        // }
+        if(resp.status === 200){
+          router.push('/login');
+        }else{
+          setErrMsg(resp.message);
+        }
       }).catch((err) => {
         setErrMsg(err.toString())
       });
