@@ -7,10 +7,11 @@ export function CreateButton(){
     return(
         <div>
             <Button
-                variant="solid"
-                colorScheme={"teal"}
+                variant="outline"
+                colorScheme={"pink"}
                 size={"sm"}
                 mr={4}
+                borderRadius={20}
                 leftIcon={<AddIcon/>}
                 as={Link}
                 href={"/create/post"}

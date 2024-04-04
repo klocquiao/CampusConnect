@@ -3,7 +3,7 @@ import { Avatar, Badge, Card, CardBody, CardFooter, HStack, Heading, List, ListI
 export function PostList({posts}){
     return(
         <div>
-            <h2>Posts</h2>
+            <Heading as="h2" fontSize='6xl' fontWeight='extrabold'>Posts</Heading>
             <List>
                 {posts ? posts.map(post => <Posting text={post.description} price={post.price} tags={post.tags}/>) : <></>}
             </List>

@@ -14,7 +14,7 @@ const createUser = async (data) => {
     try {
         return await axios.post('/user-service/api/users/create', data);
     } catch (error) {
-        console.log(error);
+        return error;
     }
 };
 

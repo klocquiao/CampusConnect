@@ -1,6 +1,9 @@
 import Link from "next/link";
 
-import { Box, Button, Container, Heading, Icon, SimpleGrid, Stack, Text } from "@chakra-ui/react";
+import { Box, Button, Container, HStack, Heading, Icon, SimpleGrid, Stack } from "@chakra-ui/react";
+import { UserContext } from "./_app";
+import { useContext } from "react";
+import { AddIcon, ArrowRightIcon } from "@chakra-ui/icons";
 
 function Blur(props){
   return(
@@ -24,6 +27,8 @@ function Blur(props){
 }
 
 export default function Index() {
+  const user = useContext(UserContext);
+
   return (
     <Box position="relative">
       <Container
@@ -34,12 +39,22 @@ export default function Index() {
         py={{base: 10, sm: 20, lg: 32}}
       >
         <Stack spacing={{base: 10, md: 20}}>
-          <Heading bgGradient='linear(to-l, #7928CA, #FF0080)' bgClip='text' fontSize='6xl' fontWeight='extrabold'>
+          <Heading bgGradient='linear(to-l, #7928CA, #FF0080)' bgClip='text' fontSize='7xl' fontWeight='extrabold'>
             Welcome to CampusConnect
           </Heading>
           <Stack>
-            <Button as={Link} href="/login" colorScheme="pink" bgGradient={"linear(to-r, pink.400, red.400)"}>Log In</Button>
-            <Button as={Link} href="/signup" colorScheme="pink" bgGradient={"linear(to-r, red.400, pink.400)"}>Sign Up</Button>
+            {
+              user ?
+              <HStack>
+                <Button as={Link} href="/home" rightIcon={<ArrowRightIcon/>} colorScheme="pink" borderRadius={20} px={10} mr={5}>View Posts</Button>
+                <Button as={Link} href="/create/post" leftIcon={<AddIcon/>} colorScheme="pink" borderRadius={20} px={10} >Create Post</Button>
+              </HStack>
+              :
+              <HStack>
+                <Button as={Link} href="/login" colorScheme="pink" borderRadius={20} px={10} mr={5}>Log In</Button>
+                <Button as={Link} href="/signup" variant={"outline"} colorScheme="pink" borderRadius={20} px={10}>Sign Up</Button>
+              </HStack>
+            }
           </Stack>
         </Stack>
       </Container>

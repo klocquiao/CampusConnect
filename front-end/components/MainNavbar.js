@@ -1,6 +1,6 @@
 import React, { useContext, useState } from 'react';
 import Link from 'next/link';
-import { Avatar, Box, Button, Center, Flex, HStack, IconButton, Menu, MenuButton, MenuDivider, MenuItem, MenuList, Stack, useDisclosure } from '@chakra-ui/react';
+import { Avatar, Box, Button, Center, Flex, HStack, Heading, IconButton, Menu, MenuButton, MenuDivider, MenuItem, MenuList, Stack, Text, useDisclosure } from '@chakra-ui/react';
 import { HamburgerIcon, CloseIcon } from '@chakra-ui/icons';
 
 import CreateButton from './post-list/PostCreation';
@@ -10,7 +10,7 @@ import { signOut } from 'firebase/auth';
 
 function MainNavbar() {
   const {isOpen, onOpen, onClose} = useDisclosure();
-  const [userIcon, setUserIcon] = useState(["gray.100","0"]);
+  const [userIcon, setUserIcon] = useState(["teal.200","0"]);
   const user = useContext(UserContext);
 
   const signout = () => {
@@ -24,7 +24,7 @@ function MainNavbar() {
   };
 
   return (
-    <Box bg="gray.900" px={4} position={"fixed"} width={"100%"} zIndex={1000}>
+    <Box bg="gray.100" boxShadow={"md"} px={4} position={"fixed"} width={"100%"} zIndex={1000}>
       <Flex h={16} alignItems={"center"} justifyContent={"space-between"}>
         <IconButton
           size={"md"}
@@ -34,14 +34,15 @@ function MainNavbar() {
           onClick={isOpen ? onClose : onOpen}
         />
         <HStack spacing={8} alignItems={"center"}>
-          <Box color={"white"}>
-            <Link href={"/home"} className="site-title nav-props">CampusConnect</Link>
+          <Box>
+            <Heading as="h1" size="md" bgGradient='linear(to-l, #7928CA, #FF0080)' bgClip='text' fontWeight={"extrabold"}><Link href={"/"} className="site-title nav-props">CampusConnect</Link></Heading>
           </Box>
           <HStack as={"nav"} spacing={4} display={{base: "none", md: "flex"}}>
-            <CreateButton/>
+            {user ? <CreateButton/> : <></>}
+            <Text fontWeight={"semibold"}><Link href="/home">View Posts</Link></Text>
           </HStack>
         </HStack>
-        <Flex alignItems={"center"}>
+        {user ? <Flex alignItems={"center"}>
             <Menu>
               <MenuButton
                 as={Button}
@@ -66,23 +67,25 @@ function MainNavbar() {
                     alt={"Profile Picture"}
                     name=" "/>
                 </Center>
+                <Center mt={5} flexDir={"column"}>
+                  <h4>{user.email}</h4>
+                </Center>
                 <Center flexDir={"column"}>
-                  <h4>DisplayName</h4>
                 </Center>
                 <MenuDivider/>
                   <MenuItem as={Link} href={`/profile`}>Profile</MenuItem>
                 <MenuDivider/>
-                  <MenuItem>Settings</MenuItem>
-                  {user ? <MenuItem onClick={signout}>Sign Out</MenuItem> : <></>}
+                  <MenuItem onClick={signout}>Sign Out</MenuItem>
               </MenuList>
             </Menu>
-        </Flex>
+        </Flex> : <></>}
       </Flex>
 
       {isOpen ? (
         <Box pb={4} display={{md: "none"}}>
           <Stack as={"nav"} spacing={4}>
-            <CreateButton/>
+            {user ? <CreateButton/> : <></>}
+            <Text fontWeight={"semibold"}><Link href="/home">View Posts</Link></Text>
           </Stack>
         </Box>
       ) : null}
