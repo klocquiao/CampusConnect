@@ -138,6 +138,41 @@ def upload_photo():
 
     return jsonify({'message': f'File {user_filename} uploaded to bucket: {get_project_id()}-bucket'}), 200
 
+@app.route('/get_photo', methods=['GET'])
+def get_photo_path():
+    username = request.args.get('username')
+    if not username:
+        return jsonify({'error': 'Username parameter is required'}), 400
+    
+    # Get auth token from request parameters
+    id_token = request.headers["Authorization"].split(" ").pop()
+
+    if not id_token:
+        return jsonify({'error': 'Authorization parameter is required'}), 400
+    
+    # Get filename from request parameters
+    filename = request.args.get('filename')
+    if not filename:
+        return jsonify({'error': 'Filename parameter is required'}), 400
+    
+    # Call user_service to confirm user is logged in
+    auth_check = check_auth(id_token)
+
+    if(not auth_check):
+        return jsonify({'error': 'Invalid auth token'}), 400
+    # Download file from Google Cloud Storage
+    user_filename = get_user_filename(username, filename)
+    
+    bucket = create_bucket_if_not_exists()
+    if bucket is None:
+        return jsonify({'error' : 'Could not find project bucket'}), 404
+
+    blob = bucket.blob(user_filename)
+    if not blob.exists():
+        return jsonify({'error': f'File: {user_filename} not found in project bucket: {bucket.name}'}), 404
+    file_path = f"https://storage.googleapis.com/{bucket.name}/{user_filename}"
+    return jsonify({'file_path' : file_path}), 200
+
 @app.route('/download', methods=['GET'])
 def download_photo():
     # Get username from request parameters
