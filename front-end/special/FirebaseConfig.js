@@ -13,7 +13,6 @@ window with const firebaseConfig. Copy it here:
 */
 
 const firebaseConfig = {
-
 };
 
 const app = initializeApp(firebaseConfig);

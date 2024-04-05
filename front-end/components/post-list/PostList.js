@@ -19,7 +19,7 @@ function Posting({text, price, tags}){
                     <Stack>
                         <HStack>
                             <Avatar name=" " src={"/images/pfp-icon-imgs/0.png"}/>
-                            <Text as='b'>${price}</Text>
+                            {price ? <Text as='b'>${price}</Text> : <></>}
                             <Text size="md">{text}</Text>
                         </HStack>
                         <HStack>
