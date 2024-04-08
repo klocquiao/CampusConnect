@@ -72,8 +72,8 @@ function MainNavbar() {
                 </Center>
                 <Center flexDir={"column"}>
                 </Center>
-                <MenuDivider/>
-                  <MenuItem as={Link} href={`/profile`}>Profile</MenuItem>
+                {/* <MenuDivider/>
+                  <MenuItem as={Link} href={`/profile`}>Profile</MenuItem> */}
                 <MenuDivider/>
                   <MenuItem onClick={signout}>Sign Out</MenuItem>
               </MenuList>
